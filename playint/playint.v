@@ -1,6 +1,9 @@
 module playint
+
 import gx
 import gg
+
+const boutons_radius := 10
 
 const key_code_name = {
 	0:   ''
@@ -134,15 +137,19 @@ const key_code_name = {
 
 interface Appli {
 mut:
-	ctx         &gg.Context
+	ctx &gg.Context
+	opt Opt
+
+	text_cfg	gx.TextCfg
+	bouton_cfg	gx.TextCfg
 }
 
 pub struct Opt {
 mut:
 	// The fonction of the action
-	actions_liste   []fn (mut app Appli)
+	actions_liste []fn (mut app Appli)
 	// The name of the action
-	actions_names   []string
+	actions_names []string
 
 	// The key to get an action from an event
 	event_to_action map[int]int
@@ -150,47 +157,60 @@ mut:
 	event_name_from_action [][]string
 
 	// Changes,  -1 -> no change
-	id_change	int 
+	id_change int = -1
 
 	pause_scroll int
 }
 
-pub fn on_event(mut opt Opt, e &gg.Event, mut app Appli){
-	if opt.id_change == -1{
+pub fn (mut opt Opt) init(){
+	opt.new_action(scroll, 'scroll')
+}
+
+pub fn on_event(e &gg.Event, mut app Appli) {
+	if app.opt.id_change == -1 {
 		match e.typ {
-		.key_down {
-			opt.imput(int(e.key_code), mut app)
+			.key_down {
+				app.opt.input(int(e.key_code), mut app)
+			}
+			.mouse_down{
+				match e.mouse_button {
+					.left{
+						// check_boutons(e.mouse_x, e.mouse_y)
+					}
+					else{}
+				}
+			}
+			else {
+			}
 		}
-		else{}
-		}
-	}
-	else{
-		opt.change(e, mut app)
+	} else {
+		app.opt.change(e, mut app)
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app Appli){
+fn (mut opt Opt) input(key_code int, mut app Appli) {
+	println('ZREREù')
 	ind := opt.event_to_action[key_code]
 	opt.actions_liste[ind](mut app)
 }
 
-fn (mut opt Opt) change(e &gg.Event, mut app Appli){
+fn (mut opt Opt) change(e &gg.Event, mut app Appli) {
+	println('ZREREù')
 	match e.typ {
 		.key_down {
 			key_code := int(e.key_code)
 			name := key_code_name[key_code]
 			// clean the old action
 			old_ind := opt.event_to_action[key_code]
-			
-			mut new := []string
-			for elem in opt.event_name_from_action[old_ind]{
-				if elem != name{
+
+			mut new := []string{}
+			for elem in opt.event_name_from_action[old_ind] {
+				if elem != name {
 					new << [elem]
 				}
 			}
 
 			opt.event_name_from_action[old_ind] = new
-
 
 			new_ind := opt.id_change
 			// new action
@@ -200,44 +220,52 @@ fn (mut opt Opt) change(e &gg.Event, mut app Appli){
 			// reset
 			opt.id_change = -1
 		}
-	else{}
+		else {}
 	}
 }
 
-pub fn (mut opt Opt) new_action(action fn(mut app Appli), name string){
+pub fn (mut opt Opt) new_action(action fn (mut app Appli), name string) {
 	opt.actions_liste << [action]
 	opt.actions_names << [name]
 	opt.event_name_from_action << []string{}
 }
 
-pub fn (mut opt Opt) settings_render(){
-	for ind in 1..10{
-		if ind + app.pause_scroll < opt.actions_names.len {
-			x := int(app.win_width/2)
+pub fn (mut opt Opt) settings_render(app Appli) {
+	for ind in 1 .. 10 {
+		if ind + opt.pause_scroll < opt.actions_names.len {
+			x := int(app.ctx.width / 2)
 			y := int(100 + ind * 40)
 
 			mut keys_codes_names := ''
-			for name in opt.event_name_from_action[ind + opt.pause_scroll]{
+			for name in opt.event_name_from_action[ind + opt.pause_scroll] {
 				keys_codes_names += name
 				keys_codes_names += '; '
 			}
 
-			text_rect_render(app, x, y, (opt.actions_names[ind + opt.pause_scroll] + ": " + keys_codes_names), 255)
+			text_rect_render(app, x, y, (opt.actions_names[ind + opt.pause_scroll] + ': ' +
+				keys_codes_names), 255)
 
-			x2 := int(3*app.win_width/4)
+			x2 := int(3 * app.ctx.width / 4)
 			app.ctx.draw_circle_filled(x2, y + 15, boutons_radius, gx.gray)
 		}
 	}
 }
 
-fn text_rect_render(app Appli ,x int, y int, text string, transparence u8){
-	lenght := text.len * app.text_cfg.size/2
-	new_x := x - lenght/2
+// Base fonctions
+
+fn scroll (mut app Appli){}
+
+
+// UI
+fn text_rect_render(app Appli, x int, y int, text string, transparence u8) {
+	lenght := text.len * app.text_cfg.size / 2
+	new_x := x - lenght / 2
 	new_y := y
-	app.ctx.draw_rounded_rect_filled(new_x - 5, new_y, lenght, 25, 5, attenuation(gx.gray, transparence))
+	app.ctx.draw_rounded_rect_filled(new_x - 5, new_y, lenght, 25, 5, attenuation(gx.gray,
+		transparence))
 	app.ctx.draw_text(new_x, new_y + 5, text, app.text_cfg)
 }
 
-fn attenuation (color gx.Color, new_a u8) gx.Color{
+fn attenuation(color gx.Color, new_a u8) gx.Color {
 	return gx.Color{color.r, color.g, color.b, new_a}
 }
