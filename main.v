@@ -3,6 +3,7 @@ module main
 import playint
 import gg
 import gx
+import math.vec {Vec2}
 
 const bg_color = gg.Color{0, 0, 0, 255}
 
@@ -11,9 +12,13 @@ mut:
 	ctx &gg.Context = unsafe { nil }
 	opt playint.Opt
 
+
 	// Police
 	text_cfg	gx.TextCfg
 	bouton_cfg	gx.TextCfg
+	
+	changing_options	bool = true
+	mouse_pos	Vec2[f32]
 }
 
 fn main() {
@@ -32,10 +37,11 @@ fn main() {
 		sample_count:  4
 	)
 	app.opt.init()
-	println(app.opt)
 	app.ctx.run()
 }
 
 fn on_init(mut app App) {}
 
-fn on_frame(mut app App) {}
+fn on_frame(mut app App) {
+	// app.opt.settings_render(app)
+}

@@ -2,6 +2,7 @@ module playint
 
 import gx
 import gg
+import math.vec {Vec2, vec2}
 
 const boutons_radius := 10
 
@@ -138,10 +139,13 @@ const key_code_name = {
 interface Appli {
 mut:
 	ctx &gg.Context
-	opt Opt
+	opt playint.Opt
 
 	text_cfg	gx.TextCfg
 	bouton_cfg	gx.TextCfg
+
+	changing_options	bool
+	mouse_pos	Vec2[f32]
 }
 
 pub struct Opt {
@@ -167,7 +171,11 @@ pub fn (mut opt Opt) init(){
 }
 
 pub fn on_event(e &gg.Event, mut app Appli) {
+	println(app.opt)
+
+	println('Event')
 	if app.opt.id_change == -1 {
+		println('A')
 		match e.typ {
 			.key_down {
 				app.opt.input(int(e.key_code), mut app)
@@ -184,8 +192,10 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 			}
 		}
 	} else {
+		println('B')
 		app.opt.change(e, mut app)
 	}
+	println('End Event')
 }
 
 fn (mut opt Opt) input(key_code int, mut app Appli) {
@@ -195,7 +205,6 @@ fn (mut opt Opt) input(key_code int, mut app Appli) {
 }
 
 fn (mut opt Opt) change(e &gg.Event, mut app Appli) {
-	println('ZREREù')
 	match e.typ {
 		.key_down {
 			key_code := int(e.key_code)
@@ -231,22 +240,24 @@ pub fn (mut opt Opt) new_action(action fn (mut app Appli), name string) {
 }
 
 pub fn (mut opt Opt) settings_render(app Appli) {
-	for ind in 1 .. 10 {
-		if ind + opt.pause_scroll < opt.actions_names.len {
-			x := int(app.ctx.width / 2)
-			y := int(100 + ind * 40)
+	if app.changing_options{
+		for ind in 1 .. 10 {
+			if ind + opt.pause_scroll < opt.actions_names.len {
+				x := int(app.ctx.width / 2)
+				y := int(100 + ind * 40)
 
-			mut keys_codes_names := ''
-			for name in opt.event_name_from_action[ind + opt.pause_scroll] {
-				keys_codes_names += name
-				keys_codes_names += '; '
+				mut keys_codes_names := ''
+				for name in opt.event_name_from_action[ind + opt.pause_scroll] {
+					keys_codes_names += name
+					keys_codes_names += '; '
+				}
+
+				text_rect_render(app, x, y, (opt.actions_names[ind + opt.pause_scroll] + ': ' +
+					keys_codes_names), 255)
+
+				x2 := int(3 * app.ctx.width / 4)
+				app.ctx.draw_circle_filled(x2, y + 15, boutons_radius, gx.gray)
 			}
-
-			text_rect_render(app, x, y, (opt.actions_names[ind + opt.pause_scroll] + ': ' +
-				keys_codes_names), 255)
-
-			x2 := int(3 * app.ctx.width / 4)
-			app.ctx.draw_circle_filled(x2, y + 15, boutons_radius, gx.gray)
 		}
 	}
 }
@@ -268,4 +279,27 @@ fn text_rect_render(app Appli, x int, y int, text string, transparence u8) {
 
 fn attenuation(color gx.Color, new_a u8) gx.Color {
 	return gx.Color{color.r, color.g, color.b, new_a}
+}
+
+fn (mut app playint.Appli) check_boutons(){
+	if app.changing_options{
+		// Check
+		for ind in 1..10{
+			if ind + app.opt.pause_scroll < app.opt.actions_names.len {
+				y := 115 + ind * 40
+				circle_pos := Vec2[f32]{f32(3*app.ctx.width/4), y}
+				if point_is_in_cirle(circle_pos, boutons_radius, app.mouse_pos){
+					app.opt.id_change = ind + app.opt.pause_scroll
+					break
+				}
+			}
+		}
+	}
+}
+
+fn point_is_in_cirle(circle_pos Vec2[f32], radius f32, mouse_pos Vec2[f32]) bool{
+	if (mouse_pos - circle_pos).magnitude() < radius {
+		return true
+	}
+	return false
 }
