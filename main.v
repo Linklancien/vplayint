@@ -33,8 +33,9 @@ fn main() {
 		bg_color:      bg_color
 		init_fn:       on_init
 		frame_fn:      on_frame
-		event_fn:      playint.on_event
+		event_fn:      on_event
 		sample_count:  4
+		font_path: playint.font_path
 	)
 	app.opt.init()
 	app.ctx.run()
@@ -43,5 +44,14 @@ fn main() {
 fn on_init(mut app App) {}
 
 fn on_frame(mut app App) {
+	app.ctx.begin()
 	app.opt.settings_render(app)
+	app.ctx.end()
+}
+
+fn on_event(e &gg.Event, mut app App) {
+	size := gg.window_size()
+	app.ctx.width = size.width
+	app.ctx.height = size.height
+	playint.on_event(e, mut app)
 }
