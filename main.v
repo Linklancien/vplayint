@@ -3,8 +3,6 @@ module main
 import playint
 import gg
 
-const bg_color = gg.Color{0, 0, 0, 255}
-
 struct App {
 mut:
 	ctx &gg.Context = unsafe { nil }
@@ -20,7 +18,6 @@ fn main() {
 		create_window: true
 		window_title:  '--'
 		user_data:     app
-		bg_color:      bg_color
 		event_fn:      playint.event_fn
 		sample_count:  4
 	)
