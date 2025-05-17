@@ -1,25 +1,29 @@
 module main
 
-import playint
 import gg
 
 struct App {
 mut:
-	ctx &gg.Context = unsafe { nil }
-	test	int = 1
+        ctx &gg.Context = unsafe { nil }
+//      test    int = 1
 }
 
 fn main() {
-	mut app := &App{}
-	app.ctx = gg.new_context(
-		fullscreen:    false
-		width:         100 * 8
-		height:        100 * 8
-		create_window: true
-		window_title:  '--'
-		user_data:     app
-		event_fn:      playint.event_fn
-		sample_count:  4
-	)
-	app.ctx.run()
+        mut app := &App{}
+        app.ctx = gg.new_context(
+                user_data:     app
+                init_fn:      event_fn
+        )
+        app.ctx.run()
+}
+
+pub interface Appli {
+mut:
+        test int
+}
+
+pub fn event_fn(mut app Appli) {
+        eprintln('Event')
+        eprintln(app.test)
+        eprintln('End Event')
 }
