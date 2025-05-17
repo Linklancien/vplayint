@@ -171,8 +171,9 @@ mut:
 }
 
 pub fn (mut opt Opt) init(){
+	opt.new_action(none_fn,'none_fn', -1)
 	opt.new_action(close, 'close', int(KeyCode.escape))
-	// opt.new_action(scroll, 'scroll')
+	opt.new_action(scroll, 'scroll', -1)
 
 }
 
@@ -242,24 +243,29 @@ pub fn (mut opt Opt) new_action(action fn (mut app Appli), name string, base_key
 
 	new_ind := opt.event_name_from_action.len - 1
 	// new action
-	opt.event_to_action[base_key_code] = new_ind
-	opt.event_name_from_action[new_ind] << [name]
+	if base_key_code != -1{
+		opt.event_to_action[base_key_code] = new_ind
+		opt.event_name_from_action[new_ind] << [key_code_name[base_key_code]]
+	}
 }
 
 pub fn (mut opt Opt) settings_render(app Appli) {
 	if app.changing_options{
-		for ind in 0 .. 10 {
+		for ind in 1 .. 10 {
 			if ind + opt.pause_scroll < opt.actions_names.len {
 				x := int(app.ctx.width / 2)
 				y := int(100 + ind * 40)
 
 				mut keys_codes_names := ''
-				for name in opt.event_name_from_action[ind + opt.pause_scroll] {
-					keys_codes_names += name
-					keys_codes_names += '; '
+				if opt.event_name_from_action[ind + opt.pause_scroll].len > 0{
+					keys_codes_names = opt.event_name_from_action[ind + opt.pause_scroll][0]
+					for name in opt.event_name_from_action[ind + opt.pause_scroll][1..] {
+						keys_codes_names += ', '
+						keys_codes_names += name
+					}
 				}
 
-				text_rect_render(app, x, y, false, (opt.actions_names[ind + opt.pause_scroll] + ': ' +
+				text_rect_render(app, x/2, y, true, (opt.actions_names[ind + opt.pause_scroll] + ': ' +
 					keys_codes_names), u8(255))
 
 				x2 := int(3 * app.ctx.width / 4)
@@ -270,6 +276,8 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 }
 
 // Base fonctions
+
+fn none_fn (mut app Appli) {}
 
 fn scroll (mut app Appli){}
 
