@@ -136,14 +136,16 @@ const key_code_name = {
 	348: 'menu'
 }
 
-interface Appli {
+pub interface Appli {
 mut:
 	ctx &gg.Context
 	opt playint.Opt
 
+
+	// Police
 	text_cfg	gx.TextCfg
 	bouton_cfg	gx.TextCfg
-
+	
 	changing_options	bool
 	mouse_pos	Vec2[f32]
 }
@@ -171,7 +173,7 @@ pub fn (mut opt Opt) init(){
 }
 
 pub fn on_event(e &gg.Event, mut app Appli) {
-	println(app.opt)
+	// println(app.opt)
 
 	println('Event')
 	if app.opt.id_change == -1 {

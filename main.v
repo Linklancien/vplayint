@@ -43,5 +43,5 @@ fn main() {
 fn on_init(mut app App) {}
 
 fn on_frame(mut app App) {
-	// app.opt.settings_render(app)
+	app.opt.settings_render(app)
 }
