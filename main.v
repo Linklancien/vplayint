@@ -46,8 +46,6 @@ fn main() {
 fn on_init(mut app App) {
 	app.opt.new_action(force_close, 'force close', int(KeyCode.f4))
 	app.opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
-	app.opt.new_action(test, 'test', int(KeyCode.v))
-	
 }
 
 fn on_frame(mut app App) {
@@ -70,11 +68,6 @@ fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 }
 
 // main fn:
-fn test(mut app App) {
-	println('TEST')
-	println(app.test_champ)
-}
-
 fn force_close(mut app App) {
 	app.ctx.quit()
 }
