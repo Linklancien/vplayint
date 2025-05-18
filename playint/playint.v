@@ -182,11 +182,11 @@ pub fn (mut opt Opt) init() {
 	opt.new_action(scroll, 'scroll', -1)
 }
 
-pub fn on_event(e &gg.Event, mut app Appli) {
-	if app.opt.id_change == -1 {
+pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr voidptr) {
+	if opt.id_change == -1 {
 		match e.typ {
 			.key_down {
-				app.opt.input(int(e.key_code), mut app)
+				opt.input(int(e.key_code), mut app_ptr)
 			}
 			.mouse_down {
 				match e.mouse_button {
@@ -199,13 +199,13 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 			else {}
 		}
 	} else {
-		app.opt.key_change(e)
+		opt.key_change(e)
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app voidptr) {
+fn (mut opt Opt) input(key_code int, mut app_ptr voidptr) {
 	ind := opt.event_to_action[key_code]
-	opt.actions_liste[ind](mut app)
+	opt.actions_liste[ind](mut app_ptr)
 }
 
 fn (mut opt Opt) key_change(e &gg.Event) {
