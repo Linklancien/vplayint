@@ -41,7 +41,9 @@ fn main() {
 	app.ctx.run()
 }
 
-fn on_init(mut app App) {}
+fn on_init(mut app App) {
+	app.opt.new_action(test, 'test', -1)
+}
 
 fn on_frame(mut app App) {
 	app.ctx.begin()
@@ -60,3 +62,5 @@ fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	app.mouse_pos = Vec2[f32]{x, y}
 	playint.check_boutons_options(mut app)
 }
+
+fn test(mut app App) {}

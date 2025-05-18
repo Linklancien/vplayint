@@ -154,7 +154,7 @@ mut:
 pub struct Opt {
 mut:
 	// The fonction of the action
-	actions_liste []fn (mut app Appli)
+	actions_liste []fn (mut voidptr)
 
 	// The name of the action
 	actions_names []string
@@ -199,25 +199,25 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 			else {}
 		}
 	} else {
-		app.opt.key_change(e, mut app)
+		app.opt.key_change(e)
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app Appli) {
+fn (mut opt Opt) input(key_code int, mut app voidptr) {
 	ind := opt.event_to_action[key_code]
 	opt.actions_liste[ind](mut app)
 }
 
-fn (mut opt Opt) key_change(e &gg.Event, mut app Appli) {
+fn (mut opt Opt) key_change(e &gg.Event) {
 	match e.typ {
 		.key_down {
-			opt.change(int(e.key_code), mut app)
+			opt.change(int(e.key_code))
 		}
 		else {}
 	}
 }
 
-fn (mut opt Opt) change(key_code int, mut app Appli) {
+fn (mut opt Opt) change(key_code int) {
 	name := key_code_name[key_code]
 
 	// clean the old action
@@ -242,7 +242,7 @@ fn (mut opt Opt) change(key_code int, mut app Appli) {
 	opt.id_change = -1
 }
 
-pub fn (mut opt Opt) new_action(action fn (mut app Appli), name string, base_key_code int) {
+pub fn (mut opt Opt) new_action(action fn (mut voidptr), name string, base_key_code int) {
 	opt.actions_liste << [action]
 	opt.actions_names << [name]
 	opt.event_name_from_action << []string{}
