@@ -66,6 +66,7 @@ fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	playint.check_boutons_options(mut app)
 }
 
+// main fn:
 fn test(mut app App) {
 	println('TEST')
 	println(app.test_champ)

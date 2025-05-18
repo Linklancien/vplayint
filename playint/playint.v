@@ -179,7 +179,6 @@ pub fn (mut opt Opt) init() {
 	opt.new_action(none_fn, 'none_fn', -1)
 	opt.new_action(force_close, 'force close', int(KeyCode.f4))
 	opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
-	opt.new_action(scroll, 'scroll', -1)
 }
 
 pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr voidptr) {
@@ -288,8 +287,6 @@ pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
 
 // Base fonctions
 fn none_fn(mut app Appli) {}
-
-fn scroll(mut app Appli) {}
 
 fn force_close(mut app Appli) {
 	app.ctx.quit()
