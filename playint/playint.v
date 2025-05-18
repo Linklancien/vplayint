@@ -177,8 +177,6 @@ mut:
 
 pub fn (mut opt Opt) init() {
 	opt.new_action(none_fn, 'none_fn', -1)
-	opt.new_action(force_close, 'force close', int(KeyCode.f4))
-	opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
 }
 
 pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr voidptr) {
@@ -288,14 +286,6 @@ pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
 // Base fonctions
 fn none_fn(mut app Appli) {}
 
-fn force_close(mut app Appli) {
-	app.ctx.quit()
-}
-
-fn option_pause(mut app Appli) {
-	app.changing_options = !app.changing_options
-}
-
 // UI
 fn text_rect_render(app Appli, x f32, y f32, corner bool, text_brut string, transparence u8) {
 	text_split := text_brut.split('\n')
@@ -331,9 +321,9 @@ fn attenuation(color gx.Color, new_a u8) gx.Color {
 	return gx.Color{color.r, color.g, color.b, new_a}
 }
 
+// Check
 pub fn check_boutons_options(mut app Appli) {
 	if app.changing_options {
-		// Check
 		for ind in 1 .. 10 {
 			if ind + app.opt.pause_scroll < app.opt.actions_names.len {
 				y := 115 + ind * 40
