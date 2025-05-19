@@ -1,6 +1,6 @@
 module main
 
-import playint { Appli }
+import playint
 import gg
 import gx
 import math.vec { Vec2 }
