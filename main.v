@@ -18,8 +18,6 @@ mut:
 
 	changing_options bool = true
 	mouse_pos        Vec2[f32]
-
-	test_champ int = 3
 }
 
 fn main() {
@@ -44,7 +42,7 @@ fn main() {
 }
 
 fn on_init(mut app App) {
-	app.opt.new_action(test, 'test', -1)
+	// app.opt.new_action(fonction, 'fonction_name', -1 or int(KeyCode. ))
 }
 
 fn on_frame(mut app App) {
@@ -67,10 +65,3 @@ fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 }
 
 // main fn:
-fn test(mut app Appli) {
-	if mut app is App {
-		println('APP')
-	} else {
-		println('Bu')
-	}
-}
