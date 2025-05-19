@@ -44,8 +44,7 @@ fn main() {
 }
 
 fn on_init(mut app App) {
-	app.opt.new_action(force_close, 'force close', int(KeyCode.f4))
-	app.opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
+	app.opt.new_action(test, 'test', -1)
 }
 
 fn on_frame(mut app App) {
@@ -68,10 +67,12 @@ fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 }
 
 // main fn:
-fn force_close(mut app Appli) {
-	app.ctx.quit()
-}
 
-fn option_pause(mut app Appli) {
-	app.changing_options = !app.changing_options
+fn test(mut app Appli){
+	if mut app is App{
+		println('APP')
+	}
+	else{
+		println('Bu')
+	}
 }

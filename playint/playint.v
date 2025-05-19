@@ -177,8 +177,16 @@ mut:
 
 pub fn (mut opt Opt) init() {
 	opt.new_action(none_fn, 'none_fn', -1)
+	opt.new_action(force_close, 'force close', int(KeyCode.f4))
+	opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
+}
 
-	opt.new_action(test_module, 'test_module', -1)
+fn force_close(mut app Appli) {
+	app.ctx.quit()
+}
+
+fn option_pause(mut app Appli) {
+	app.changing_options = !app.changing_options
 }
 
 pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr Appli) {
@@ -287,12 +295,6 @@ pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
 
 // Base fonctions
 fn none_fn(mut app Appli) {}
-
-fn test_module(mut app_ptr Appli){
-	println(app_ptr.type_name())
-	app := app_ptr as Appli
-	println(app.changing_options)
-}
 
 // UI
 fn text_rect_render(app Appli, x f32, y f32, corner bool, text_brut string, transparence u8) {
