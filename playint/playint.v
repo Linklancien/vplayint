@@ -169,8 +169,10 @@ mut:
 	id_change int = -1
 
 	pause_scroll int
+
 	// most likely between 0 & 1
 	description_placement_proportion f32 = 0.5
+
 	// most likely between 1 & 2
 	bouton_placement_proportion f32 = 1.5
 }

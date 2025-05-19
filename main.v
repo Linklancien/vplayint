@@ -1,7 +1,7 @@
 module main
 
-import playint {Appli}
-import gg { KeyCode }
+import playint { Appli }
+import gg
 import gx
 import math.vec { Vec2 }
 
@@ -19,7 +19,7 @@ mut:
 	changing_options bool = true
 	mouse_pos        Vec2[f32]
 
-	test_champ	int = 3
+	test_champ int = 3
 }
 
 fn main() {
@@ -67,12 +67,10 @@ fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 }
 
 // main fn:
-
-fn test(mut app Appli){
-	if mut app is App{
+fn test(mut app Appli) {
+	if mut app is App {
 		println('APP')
-	}
-	else{
+	} else {
 		println('Bu')
 	}
 }
