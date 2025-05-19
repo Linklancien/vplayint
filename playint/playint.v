@@ -191,11 +191,11 @@ fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
 }
 
-pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr Appli) {
-	if opt.id_change == -1 {
+pub fn on_event(e &gg.Event, mut app Appli) {
+	if app.opt.id_change == -1 {
 		match e.typ {
 			.key_down {
-				opt.input(int(e.key_code), mut app_ptr)
+				app.opt.input(int(e.key_code), mut app)
 			}
 			.mouse_down {
 				match e.mouse_button {
@@ -208,13 +208,13 @@ pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr Appli) {
 			else {}
 		}
 	} else {
-		opt.key_change(e)
+		app.opt.key_change(e)
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app_ptr Appli) {
+fn (mut opt Opt) input(key_code int, mut app Appli) {
 	ind := opt.event_to_action[key_code]
-	opt.actions_liste[ind](mut app_ptr)
+	opt.actions_liste[ind](mut app)
 }
 
 fn (mut opt Opt) key_change(e &gg.Event) {
@@ -242,11 +242,10 @@ fn (mut opt Opt) change(key_code int) {
 	opt.event_name_from_action[old_ind] = new
 
 	new_ind := opt.id_change
-	if new_ind == old_ind{
+	if new_ind == old_ind {
 		// suppress the key
 		opt.event_to_action[key_code] = 0
-	}
-	else{
+	} else {
 		// new action
 		opt.event_to_action[key_code] = new_ind
 		opt.event_name_from_action[new_ind] << [name]

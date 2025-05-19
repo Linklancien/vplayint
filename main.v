@@ -58,7 +58,7 @@ fn on_event(e &gg.Event, mut app App) {
 	app.ctx.width = size.width
 	app.ctx.height = size.height
 
-	playint.on_event(e, mut app.opt, mut &app)
+	playint.on_event(e, mut &app)
 }
 
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
