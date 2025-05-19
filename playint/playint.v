@@ -242,10 +242,15 @@ fn (mut opt Opt) change(key_code int) {
 	opt.event_name_from_action[old_ind] = new
 
 	new_ind := opt.id_change
-
-	// new action
-	opt.event_to_action[key_code] = new_ind
-	opt.event_name_from_action[new_ind] << [name]
+	if new_ind == old_ind{
+		// suppress the key
+		opt.event_to_action[key_code] = 0
+	}
+	else{
+		// new action
+		opt.event_to_action[key_code] = new_ind
+		opt.event_name_from_action[new_ind] << [name]
+	}
 
 	// reset
 	opt.id_change = -1
