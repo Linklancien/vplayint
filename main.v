@@ -1,6 +1,6 @@
 module main
 
-import playint
+import playint {Appli}
 import gg { KeyCode }
 import gx
 import math.vec { Vec2 }
@@ -68,11 +68,10 @@ fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 }
 
 // main fn:
-fn force_close(mut app App) {
+fn force_close(mut app Appli) {
 	app.ctx.quit()
 }
 
-fn option_pause(mut app App) {
-	println('PAUSE')
+fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
 }

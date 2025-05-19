@@ -154,7 +154,7 @@ mut:
 pub struct Opt {
 mut:
 	// The fonction of the action
-	actions_liste []fn (mut voidptr)
+	actions_liste []fn (mut Appli)
 
 	// The name of the action
 	actions_names []string
@@ -177,9 +177,11 @@ mut:
 
 pub fn (mut opt Opt) init() {
 	opt.new_action(none_fn, 'none_fn', -1)
+
+	opt.new_action(test_module, 'test_module', -1)
 }
 
-pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr voidptr) {
+pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr Appli) {
 	if opt.id_change == -1 {
 		match e.typ {
 			.key_down {
@@ -200,7 +202,7 @@ pub fn on_event(e &gg.Event, mut opt Opt, mut app_ptr voidptr) {
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app_ptr voidptr) {
+fn (mut opt Opt) input(key_code int, mut app_ptr Appli) {
 	ind := opt.event_to_action[key_code]
 	opt.actions_liste[ind](mut app_ptr)
 }
@@ -239,7 +241,7 @@ fn (mut opt Opt) change(key_code int) {
 	opt.id_change = -1
 }
 
-pub fn (mut opt Opt) new_action(action fn (mut voidptr), name string, base_key_code int) {
+pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, base_key_code int) {
 	opt.actions_liste << [action]
 	opt.actions_names << [name]
 	opt.event_name_from_action << []string{}
@@ -285,6 +287,12 @@ pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
 
 // Base fonctions
 fn none_fn(mut app Appli) {}
+
+fn test_module(mut app_ptr Appli){
+	println(app_ptr.type_name())
+	app := app_ptr as Appli
+	println(app.changing_options)
+}
 
 // UI
 fn text_rect_render(app Appli, x f32, y f32, corner bool, text_brut string, transparence u8) {
