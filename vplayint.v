@@ -1,4 +1,4 @@
-module playint
+module vplayint
 
 import os
 import gx
