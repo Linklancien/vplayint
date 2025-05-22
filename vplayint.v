@@ -374,7 +374,7 @@ pub fn boutons_draw(app Appli) {
 	}
 }
 
-pub fn boutons_pos_resize(app Appli, x_ratio f32, y_ratio f32) {
+pub fn boutons_pos_resize(mut app Appli, x_ratio f32, y_ratio f32) {
 	for mut btn in app.boutons_liste {
 		btn.pos_resize(x_ratio, y_ratio)
 	}
