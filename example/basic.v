@@ -21,7 +21,7 @@ mut:
 	changing_options bool = true
 	mouse_pos        Vec2[f32]
 
-	boutons_liste []Bouton
+	boutons_liste []playint.Bouton
 }
 
 fn main() {
