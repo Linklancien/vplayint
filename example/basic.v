@@ -6,7 +6,7 @@ import gg
 import gx
 import math.vec { Vec2 }
 
-const font_path = os.resource_abs_path('example/FontMono.ttf')
+const font_path = os.resource_abs_path('FontMono.ttf')
 const bg_color = gg.Color{0, 0, 0, 255}
 
 struct App {
