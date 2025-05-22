@@ -147,6 +147,8 @@ mut:
 
 	changing_options bool
 	mouse_pos        Vec2[f32]
+
+	boutons_liste	[]Bouton
 }
 
 pub struct Opt {
@@ -336,17 +338,25 @@ mut:
 	is_actionnable fn (Appli) bool @[required]
 }
 
-pub fn (bouton Bouton) check(app Appli) bool{
-	return point_is_in_cirle(bouton.pos, 20, app.mouse_pos)
+pub fn (btn Bouton) check(app Appli) bool{
+	return point_is_in_cirle(btn.pos, 20, app.mouse_pos)
 }
 
-pub fn (btn Bouton) draw(app appli){
+pub fn (btn Bouton) draw(app Appli){
 	if btn.is_visible(app){
 		mut transparency := u8(255)
 		if !btn.is_actionnable || btn.check(app){
 			transparency = u8(150)
 		}
 		text_rect_render(app ctx, btn.cfg, btn.pos.x, btn.pos.y, true, true, btn.text, transparency)
+	}
+}
+
+pub fn boutons_check(mut app Appli){
+	for btn in app.boutons_liste{
+		if btn.check(app) && btn.is_visible(app) && btn.is_actionnable(app){
+			btn.fonction(mut app)
+		}
 	}
 }
 
