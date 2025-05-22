@@ -1,5 +1,5 @@
 Module{
-	name: 'V player interaction',
+	name: 'V_player_interaction',
 	description: 'A V language module for handeling players inputs.',
 	version: '0.1'
 	dependencies: []
