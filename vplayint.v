@@ -6,7 +6,6 @@ import gg { KeyCode }
 import math.vec { Vec2 }
 
 const boutons_radius = 10
-pub const font_path = os.resource_abs_path('playint/FontMono.ttf')
 
 const key_code_name = {
 	0:   ''
