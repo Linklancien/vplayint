@@ -360,6 +360,12 @@ pub fn boutons_check(mut app Appli){
 	}
 }
 
+pub fn boutons_draw(app Appli) {
+	for btn in app.boutons_liste{
+		btn.draw(app)
+	}
+}
+
 
 // UI
 fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
