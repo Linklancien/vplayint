@@ -21,7 +21,7 @@ mut:
 	changing_options bool = true
 	mouse_pos        Vec2[f32]
 
-	boutons_liste	[]Bouton
+	boutons_liste []Bouton
 }
 
 fn main() {
@@ -53,7 +53,8 @@ fn on_init(mut app App) {
 
 fn on_frame(mut app App) {
 	app.ctx.begin()
-	app.opt.settings_render(app, true)
+	app.opt.settings_render(app)
+	playint.boutons_draw(app)
 	app.ctx.end()
 }
 
@@ -64,6 +65,7 @@ fn on_event(e &gg.Event, mut app App) {
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	app.mouse_pos = Vec2[f32]{x, y}
 	playint.check_boutons_options(mut app)
+	playint.boutons_check(mut app)
 }
 
 fn on_move(x f32, y f32, mut app App) {
@@ -73,21 +75,13 @@ fn on_move(x f32, y f32, mut app App) {
 fn on_resized(e &gg.Event, mut app App) {
 	size := gg.window_size()
 
-	if app.changing_options {
-	} else if app.playing {
-	} else {
-		for mut bouton in app.bouton_main_menu_liste {
-			x := f32(bouton.pos.x * size.width / app.ctx.width)
-			y := f32(bouton.pos.y * size.height / app.ctx.height)
-			bouton.pos = Vec2[f32]{
-				x: x
-				y: y
-			}
-		}
-	}
+	x := f32(size.width / app.ctx.width)
+	y := f32(size.height / app.ctx.height)
 
 	app.ctx.width = size.width
 	app.ctx.height = size.height
+
+	playint.boutons_pos_resize(mut app, x, y)
 }
 
 // main fn:

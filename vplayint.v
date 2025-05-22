@@ -148,7 +148,7 @@ mut:
 	changing_options bool
 	mouse_pos        Vec2[f32]
 
-	boutons_liste	[]Bouton
+	boutons_liste []Bouton
 }
 
 pub struct Opt {
@@ -269,7 +269,7 @@ pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, base_key_cod
 	}
 }
 
-pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
+pub fn (mut opt Opt) settings_render(app Appli) {
 	if app.changing_options {
 		for ind in 1 .. 10 {
 			true_ind := ind + opt.pause_scroll
@@ -287,7 +287,7 @@ pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
 				}
 
 				text_rect_render(app, x * app.opt.description_placement_proportion, y,
-					corner, (opt.actions_names[true_ind] + ': ' + keys_codes_names), u8(255))
+					false, (opt.actions_names[true_ind] + ': ' + keys_codes_names), u8(255))
 				mut color := gx.gray
 				if app.opt.id_change == true_ind {
 					color = gx.red
@@ -301,7 +301,6 @@ pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
 
 // Base fonctions
 fn none_fn(mut app Appli) {}
-
 
 // Check
 pub fn check_boutons_options(mut app Appli) {
@@ -326,46 +325,60 @@ fn point_is_in_cirle(circle_pos Vec2[f32], radius f32, mouse_pos Vec2[f32]) bool
 	return false
 }
 
-// boutons
-
+// Bouton
 pub struct Bouton {
 mut:
 	text           string
-	cfg			   gx.TextCfg
+	cfg            gx.TextCfg
 	pos            Vec2[f32]
 	fonction       fn (mut Appli)  @[required]
 	is_visible     fn (Appli) bool @[required]
 	is_actionnable fn (Appli) bool @[required]
 }
 
-pub fn (btn Bouton) check(app Appli) bool{
+// Bouton fn
+pub fn (btn Bouton) check(app Appli) bool {
 	return point_is_in_cirle(btn.pos, 20, app.mouse_pos)
 }
 
-pub fn (btn Bouton) draw(app Appli){
-	if btn.is_visible(app){
+pub fn (btn Bouton) draw(app Appli) {
+	if btn.is_visible(app) {
 		mut transparency := u8(255)
-		if !btn.is_actionnable || btn.check(app){
+		if !btn.is_actionnable || btn.check(app) {
 			transparency = u8(150)
 		}
-		text_rect_render(app ctx, btn.cfg, btn.pos.x, btn.pos.y, true, true, btn.text, transparency)
+		text_rect_render(app.ctx, btn.cfg, btn.pos.x, btn.pos.y, true, true, btn.text,
+			transparency)
 	}
 }
 
-pub fn boutons_check(mut app Appli){
-	for btn in app.boutons_liste{
-		if btn.check(app) && btn.is_visible(app) && btn.is_actionnable(app){
+pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32) {
+	bouton.pos = Vec2[f32]{
+		x: btn.pos.x * x_ratio
+		y: btn.pos.y * y_ratio
+	}
+}
+
+// Boutons fn
+pub fn boutons_check(mut app Appli) {
+	for btn in app.boutons_liste {
+		if btn.check(app) && btn.is_visible(app) && btn.is_actionnable(app) {
 			btn.fonction(mut app)
 		}
 	}
 }
 
 pub fn boutons_draw(app Appli) {
-	for btn in app.boutons_liste{
+	for btn in app.boutons_liste {
 		btn.draw(app)
 	}
 }
 
+pub fn boutons_pos_resize(app Appli, x_ratio f32, y_ratio f32) {
+	for mut btn in app.boutons_liste {
+		btn.pos_resize(x_ratio, y_ratio)
+	}
+}
 
 // UI
 fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
@@ -390,12 +403,12 @@ fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width b
 		new_x -= max_len / 2
 	}
 	mut new_y := y
-	if middle_height{
+	if middle_height {
 		new_y -= cfg.size * text_split.len
 	}
 
-	ctx.draw_rounded_rect_filled(new_x, y, max_len, cfg.size * text_split.len + 10,
-		5, attenuation(gx.gray, transparency))
+	ctx.draw_rounded_rect_filled(new_x, y, max_len, cfg.size * text_split.len + 10, 5,
+		attenuation(gx.gray, transparency))
 	for id, text in text_split {
 		new_y += cfg.size * id
 		ctx.draw_text(int(new_x + 5), int(new_y + 5), text, cfg)
