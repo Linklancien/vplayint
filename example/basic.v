@@ -37,7 +37,7 @@ fn main() {
 		event_fn:      on_event
 		click_fn:      on_click
 		sample_count:  4
-		font_path:    font_path
+		font_path:     font_path
 	)
 	app.opt.init()
 	app.ctx.run()

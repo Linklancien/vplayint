@@ -300,40 +300,6 @@ pub fn (mut opt Opt) settings_render(app Appli, corner bool) {
 // Base fonctions
 fn none_fn(mut app Appli) {}
 
-// UI
-fn text_rect_render(app Appli, x f32, y f32, corner bool, text_brut string, transparence u8) {
-	text_split := text_brut.split('\n')
-
-	mut text_len := []int{cap: text_split.len}
-	mut max_len := 0
-
-	// Precalcul
-	for text in text_split {
-		lenght := text.len * 8 + 10
-		text_len << lenght
-
-		if lenght > max_len {
-			max_len = lenght
-		}
-	}
-
-	// affichage
-	mut new_x := x
-	if corner == false {
-		new_x -= max_len / 2
-	}
-
-	app.ctx.draw_rounded_rect_filled(new_x, y, max_len, app.text_cfg.size * text_split.len + 10,
-		5, attenuation(gx.gray, transparence))
-	for id, text in text_split {
-		new_y := y + app.text_cfg.size * id
-		app.ctx.draw_text(int(new_x + 5), int(new_y + 5), text, app.text_cfg)
-	}
-}
-
-fn attenuation(color gx.Color, new_a u8) gx.Color {
-	return gx.Color{color.r, color.g, color.b, new_a}
-}
 
 // Check
 pub fn check_boutons_options(mut app Appli) {
@@ -356,4 +322,70 @@ fn point_is_in_cirle(circle_pos Vec2[f32], radius f32, mouse_pos Vec2[f32]) bool
 		return true
 	}
 	return false
+}
+
+// boutons
+
+pub struct Bouton {
+mut:
+	text           string
+	cfg			   gx.TextCfg
+	pos            Vec2[f32]
+	fonction       fn (mut Appli)  @[required]
+	is_visible     fn (Appli) bool @[required]
+	is_actionnable fn (Appli) bool @[required]
+}
+
+pub fn (bouton Bouton) check(app Appli) bool{
+	return point_is_in_cirle(bouton.pos, 20, app.mouse_pos)
+}
+
+pub fn (btn Bouton) draw(app appli){
+	if btn.is_visible(app){
+		mut transparency := u8(255)
+		if !btn.is_actionnable || btn.check(app){
+			transparency = u8(150)
+		}
+		text_rect_render(app ctx, btn.cfg, btn.pos.x, btn.pos.y, true, true, btn.text, transparency)
+	}
+}
+
+
+// UI
+fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
+	text_split := text_brut.split('\n')
+
+	mut text_len := []int{cap: text_split.len}
+	mut max_len := 0
+
+	// Precalcul
+	for text in text_split {
+		lenght := text.len * 8 + 10
+		text_len << lenght
+
+		if lenght > max_len {
+			max_len = lenght
+		}
+	}
+
+	// affichage
+	mut new_x := x
+	if middle_width {
+		new_x -= max_len / 2
+	}
+	mut new_y := y
+	if middle_height{
+		new_y -= cfg.size * text_split.len
+	}
+
+	ctx.draw_rounded_rect_filled(new_x, y, max_len, cfg.size * text_split.len + 10,
+		5, attenuation(gx.gray, transparency))
+	for id, text in text_split {
+		new_y += cfg.size * id
+		ctx.draw_text(int(new_x + 5), int(new_y + 5), text, cfg)
+	}
+}
+
+fn attenuation(color gx.Color, new_a u8) gx.Color {
+	return gx.Color{color.r, color.g, color.b, new_a}
 }
