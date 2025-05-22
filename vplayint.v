@@ -1,6 +1,5 @@
 module playint
 
-import os
 import gx
 import gg { KeyCode }
 import math.vec { Vec2 }

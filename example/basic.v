@@ -1,6 +1,7 @@
 module main
 
 import linklancien.playint
+import os
 import gg
 import gx
 import math.vec { Vec2 }
