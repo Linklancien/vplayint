@@ -361,7 +361,7 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32) {
 
 // Boutons fn
 pub fn boutons_check(mut app Appli) {
-	for btn in app.boutons_liste {
+	for mut btn in app.boutons_liste {
 		if btn.check(app) && btn.is_visible(app) && btn.is_actionnable(app) {
 			btn.fonction(mut app)
 		}
