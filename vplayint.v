@@ -392,7 +392,7 @@ pub fn boutons_pos_resize(mut app Appli, x_ratio f32, y_ratio f32) {
 }
 
 // UI
-fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
+pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
 	text_split := text_brut.split('\n')
 
 	mut text_len := []int{cap: text_split.len}
@@ -426,6 +426,6 @@ fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width b
 	}
 }
 
-fn attenuation(color gx.Color, new_a u8) gx.Color {
+pub fn attenuation(color gx.Color, new_a u8) gx.Color {
 	return gx.Color{color.r, color.g, color.b, new_a}
 }
