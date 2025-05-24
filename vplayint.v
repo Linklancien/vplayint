@@ -345,7 +345,7 @@ pub fn (btn Bouton) check(app Appli) bool {
 pub fn (btn Bouton) draw(app Appli) {
 	if btn.is_visible(app) {
 		mut transparency := u8(255)
-		if !btn.is_actionnable || btn.check(app) {
+		if !btn.is_actionnable(app) || btn.check(app) {
 			transparency = u8(150)
 		}
 		text_rect_render(app.ctx, btn.cfg, btn.pos.x, btn.pos.y, true, true, btn.text,
