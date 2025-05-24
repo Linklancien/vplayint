@@ -333,12 +333,12 @@ mut:
 	cfg            gx.TextCfg
 	pos            Vec2[f32]
 	fonction       fn (mut Appli)  @[required]
-	is_visible     fn (Appli) bool @[required]
-	is_actionnable fn (Appli) bool @[required]
+	is_visible     fn (mut Appli) bool @[required]
+	is_actionnable fn (mut Appli) bool @[required]
 }
 
 // Bouton fn
-pub fn (btn Bouton) check(app Appli) bool {
+pub fn (btn Bouton) check(mut app Appli) bool {
 	return point_is_in_cirle(btn.pos, 20, app.mouse_pos)
 }
 
@@ -363,7 +363,7 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32) {
 // Boutons fn
 pub fn boutons_check(mut app Appli) {
 	for btn in app.boutons_liste {
-		if btn.check(app) && btn.is_visible(app) && btn.is_actionnable(app) {
+		if btn.check(mut app) && btn.is_visible(mut app) && btn.is_actionnable(mut app) {
 			btn.fonction(mut app)
 		}
 	}
