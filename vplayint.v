@@ -286,8 +286,9 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 					}
 				}
 
-				text_rect_render(app, x * app.opt.description_placement_proportion, y,
-					false, (opt.actions_names[true_ind] + ': ' + keys_codes_names), u8(255))
+				text_rect_render(app.ctx, app.text_cfg, x * app.opt.description_placement_proportion,
+					y, false, false, (opt.actions_names[true_ind] + ': ' + keys_codes_names),
+					u8(255))
 				mut color := gx.gray
 				if app.opt.id_change == true_ind {
 					color = gx.red
@@ -353,7 +354,7 @@ pub fn (btn Bouton) draw(app Appli) {
 }
 
 pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32) {
-	bouton.pos = Vec2[f32]{
+	btn.pos = Vec2[f32]{
 		x: btn.pos.x * x_ratio
 		y: btn.pos.y * y_ratio
 	}
