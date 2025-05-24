@@ -317,7 +317,11 @@ pub fn check_boutons_options(mut app Appli) {
 				y := 115 + ind * 40
 				circle_pos := Vec2[f32]{f32(app.ctx.width * app.opt.bouton_placement_proportion / 2), y}
 				if point_is_in_cirle(circle_pos, boutons_radius, app.mouse_pos) {
-					app.opt.id_change = ind + app.opt.pause_scroll
+					if app.opt.id_change != ind + app.opt.pause_scroll {
+						app.opt.id_change = ind + app.opt.pause_scroll
+					} else {
+						app.opt.id_change = 0
+					}
 					break
 				}
 			}
@@ -338,7 +342,7 @@ mut:
 	text           string
 	cfg            gx.TextCfg
 	pos            Vec2[f32]
-	fonction       fn (mut Appli)  @[required]
+	fonction       fn (mut Appli)      @[required]
 	is_visible     fn (mut Appli) bool @[required]
 	is_actionnable fn (mut Appli) bool @[required]
 }
