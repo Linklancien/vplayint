@@ -369,9 +369,9 @@ pub fn boutons_check(mut app Appli) {
 	}
 }
 
-pub fn boutons_draw(app Appli) {
+pub fn boutons_draw(mut app Appli) {
 	for btn in app.boutons_liste {
-		btn.draw(app)
+		btn.draw(mut app)
 	}
 }
 
