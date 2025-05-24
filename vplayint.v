@@ -193,7 +193,7 @@ fn force_close(mut app Appli) {
 fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
 }
-
+ù
 pub fn on_event(e &gg.Event, mut app Appli) {
 	if app.opt.id_change == -1 {
 		match e.typ {
@@ -362,7 +362,7 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32) {
 
 // Boutons fn
 pub fn boutons_check(mut app Appli) {
-	for mut btn in app.boutons_liste {
+	for btn in app.boutons_liste {
 		if btn.check(app) && btn.is_visible(app) && btn.is_actionnable(app) {
 			btn.fonction(mut app)
 		}
