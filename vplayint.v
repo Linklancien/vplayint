@@ -183,6 +183,9 @@ pub fn (mut opt Opt) init() {
 	opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
 }
 
+// Base fonctions
+fn none_fn(mut app Appli) {}
+
 fn force_close(mut app Appli) {
 	app.ctx.quit()
 }
@@ -299,9 +302,6 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 		}
 	}
 }
-
-// Base fonctions
-fn none_fn(mut app Appli) {}
 
 // Check
 pub fn check_boutons_options(mut app Appli) {
