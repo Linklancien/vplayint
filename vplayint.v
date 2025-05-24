@@ -193,7 +193,7 @@ fn force_close(mut app Appli) {
 fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
 }
-ù
+
 pub fn on_event(e &gg.Event, mut app Appli) {
 	if app.opt.id_change == -1 {
 		match e.typ {
