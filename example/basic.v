@@ -54,7 +54,7 @@ fn on_init(mut app App) {
 fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.opt.settings_render(app)
-	playint.boutons_draw(app)
+	playint.boutons_draw(mut app)
 	app.ctx.end()
 }
 

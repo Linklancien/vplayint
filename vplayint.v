@@ -342,7 +342,7 @@ pub fn (btn Bouton) check(mut app Appli) bool {
 	return point_is_in_cirle(btn.pos, 20, app.mouse_pos)
 }
 
-pub fn (btn Bouton) draw(app Appli) {
+pub fn (btn Bouton) draw(mut app Appli) {
 	if btn.is_visible(mut app) {
 		mut transparency := u8(255)
 		if !btn.is_actionnable(mut app) || btn.check(mut app) {
