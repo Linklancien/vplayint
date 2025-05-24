@@ -289,15 +289,21 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 					}
 				}
 
+				mut transparency := u8(255)
+				circle_pos := Vec2[f32]{f32(x * app.opt.bouton_placement_proportion), y}
+				if point_is_in_cirle(circle_pos, boutons_radius, app.mouse_pos) {
+					transparency = 150
+				}
+
 				text_rect_render(app.ctx, app.text_cfg, x * app.opt.description_placement_proportion,
 					y, false, false, (opt.actions_names[true_ind] + ': ' + keys_codes_names),
-					u8(255))
+					transparency)
 				mut color := gx.gray
 				if app.opt.id_change == true_ind {
 					color = gx.red
 				}
 				app.ctx.draw_circle_filled(x * app.opt.bouton_placement_proportion, y + 15,
-					boutons_radius, color)
+					boutons_radius, attenuation(color, transparency))
 			}
 		}
 	}
