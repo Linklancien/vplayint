@@ -290,7 +290,7 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 				}
 
 				mut transparency := u8(255)
-				circle_pos := Vec2[f32]{f32(x * app.opt.bouton_placement_proportion), y}
+				circle_pos := Vec2[f32]{f32(x * app.opt.bouton_placement_proportion), y + 15}
 				if point_is_in_cirle(circle_pos, boutons_radius, app.mouse_pos) {
 					transparency = 150
 				}
