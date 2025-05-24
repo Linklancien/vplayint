@@ -55,6 +55,7 @@ fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.opt.settings_render(app)
 	playint.boutons_draw(mut app)
+	app.main_menu_render()
 	app.ctx.end()
 }
 
@@ -82,6 +83,18 @@ fn on_resized(e &gg.Event, mut app App) {
 	app.ctx.height = size.height
 
 	playint.boutons_pos_resize(mut app, x, y)
+}
+
+// main menu fn:
+
+fn (mut app App) main_menu_render(){
+	mut transparency := u8(255)
+	if app.changing_options{
+		transparency = 175
+	}
+	x := app.ctx.width/2
+	y := app.ctx.height/2
+	playint.text_rect_render(app.ctx, app.text_cfg, x, y, true, true, 'TITLE')
 }
 
 // main fn:
