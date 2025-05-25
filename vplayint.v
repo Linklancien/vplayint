@@ -216,7 +216,7 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 	}
 }
 
-fn (mut opt Opt) input(key u32, mut app Appli) {
+fn (mut opt Opt) input(key u8, mut app Appli) {
 	ind := opt.event_to_action[key]
 	opt.actions_liste[ind](mut app)
 }
@@ -224,13 +224,13 @@ fn (mut opt Opt) input(key u32, mut app Appli) {
 fn (mut opt Opt) key_change(e &gg.Event) {
 	match e.typ {
 		.key_down {
-			opt.change(e.char_code, u8(e.char_code).ascii_str())
+			opt.change(e.char_code, e.char_code.ascii_str())
 		}
 		else {}
 	}
 }
 
-fn (mut opt Opt) change(key u32, name string) {
+fn (mut opt Opt) change(key u8, name string) {
 
 	// clean the old action
 	old_ind := opt.event_to_action[key]
@@ -258,7 +258,7 @@ fn (mut opt Opt) change(key u32, name string) {
 	opt.id_change = -1
 }
 
-pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, key u32) {
+pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, key u8) {
 	opt.actions_liste << [action]
 	opt.actions_names << [name]
 	opt.event_name_from_action << []string{}
