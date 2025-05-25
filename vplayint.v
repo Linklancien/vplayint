@@ -258,7 +258,7 @@ fn (mut opt Opt) change(key_code int, name string) {
 	opt.id_change = -1
 }
 
-pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, key u8) {
+pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, key u32) {
 	opt.actions_liste << [action]
 	opt.actions_names << [name]
 	opt.event_name_from_action << []string{}
@@ -266,7 +266,7 @@ pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, key u8) {
 	new_ind := opt.event_name_from_action.len - 1
 
 	// new action
-	if key != 0 {
+	if base_key_code != 0 {
 		opt.event_to_action[key] = new_ind
 		opt.event_name_from_action[new_ind] << [key.ascii_str()]
 	}
