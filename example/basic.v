@@ -52,7 +52,8 @@ fn on_init(mut app App) {
 	app.boutons_liste << [
 		playint.Bouton{
 			text:           'Options'
-			pos:            Vec2[f32]{30, 16}
+			pos:            Vec2[f32]{4*'Options'.len + 5, app.bouton_cfg.size}
+			cfg:			app.bouton_cfg
 			fonction:       playint.option_pause
 			is_visible:     params_is_visible
 			is_actionnable: params_is_actionnable
