@@ -1,7 +1,7 @@
 module playint
 
 import gx
-import gg { KeyCode }
+import gg
 import math.vec { Vec2 }
 
 const boutons_radius = 10
@@ -199,7 +199,7 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 	if app.opt.id_change == -1 {
 		match e.typ {
 			.key_down {
-				app.opt.input(int(e.key_code), mut app)
+				app.opt.input(e.char_code, mut app)
 			}
 			.mouse_down {
 				match e.mouse_button {
@@ -216,24 +216,24 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app Appli) {
-	ind := opt.event_to_action[key_code]
+fn (mut opt Opt) input(key u8, mut app Appli) {
+	ind := opt.event_to_action[key]
 	opt.actions_liste[ind](mut app)
 }
 
 fn (mut opt Opt) key_change(e &gg.Event) {
 	match e.typ {
 		.key_down {
-			opt.change(int(e.key_code), e.char_code.ascii_str())
+			opt.change(e.char_code, e.char_code.ascii_str())
 		}
 		else {}
 	}
 }
 
-fn (mut opt Opt) change(key_code int, name string) {
+fn (mut opt Opt) change(key u8, name string) {
 
 	// clean the old action
-	old_ind := opt.event_to_action[key_code]
+	old_ind := opt.event_to_action[key]
 
 	mut new := []string{}
 	for elem in opt.event_name_from_action[old_ind] {
@@ -247,10 +247,10 @@ fn (mut opt Opt) change(key_code int, name string) {
 	new_ind := opt.id_change
 	if new_ind == old_ind {
 		// suppress the key
-		opt.event_to_action[key_code] = 0
+		opt.event_to_action[key] = 0
 	} else {
 		// new action
-		opt.event_to_action[key_code] = new_ind
+		opt.event_to_action[key] = new_ind
 		opt.event_name_from_action[new_ind] << [name]
 	}
 
