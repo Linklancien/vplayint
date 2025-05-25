@@ -178,9 +178,9 @@ mut:
 }
 
 pub fn (mut opt Opt) init() {
-	opt.new_action(none_fn, 'none_fn', -1)
-	opt.new_action(force_close, 'force close', int(KeyCode.f4))
-	opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
+	opt.new_action(none_fn, 'none_fn', 0)
+	opt.new_action(force_close, 'force close', 0)
+	opt.new_action(option_pause, 'option pause', 0)
 }
 
 // Base fonctions
@@ -195,6 +195,7 @@ pub fn option_pause(mut app Appli) {
 }
 
 pub fn on_event(e &gg.Event, mut app Appli) {
+	println(e.char_code)
 	if app.opt.id_change == -1 {
 		match e.typ {
 			.key_down {
@@ -223,14 +224,13 @@ fn (mut opt Opt) input(key_code int, mut app Appli) {
 fn (mut opt Opt) key_change(e &gg.Event) {
 	match e.typ {
 		.key_down {
-			opt.change(int(e.key_code))
+			opt.change(int(e.key_code), e.char_code.ascii_str())
 		}
 		else {}
 	}
 }
 
-fn (mut opt Opt) change(key_code int) {
-	name := key_code_name[key_code]
+fn (mut opt Opt) change(key_code int, name string) {
 
 	// clean the old action
 	old_ind := opt.event_to_action[key_code]
@@ -258,7 +258,7 @@ fn (mut opt Opt) change(key_code int) {
 	opt.id_change = -1
 }
 
-pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, base_key_code int) {
+pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, key u32) {
 	opt.actions_liste << [action]
 	opt.actions_names << [name]
 	opt.event_name_from_action << []string{}
@@ -266,9 +266,9 @@ pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, base_key_cod
 	new_ind := opt.event_name_from_action.len - 1
 
 	// new action
-	if base_key_code != -1 {
-		opt.event_to_action[base_key_code] = new_ind
-		opt.event_name_from_action[new_ind] << [key_code_name[base_key_code]]
+	if base_key_code != 0 {
+		opt.event_to_action[key] = new_ind
+		opt.event_name_from_action[new_ind] << [key.ascii_str()]
 	}
 }
 
