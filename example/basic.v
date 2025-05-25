@@ -90,7 +90,7 @@ fn on_resized(e &gg.Event, mut app App) {
 	new_x := size.width
 	new_y := size.height
 
-	playint.boutons_pos_resize(mut app, old_x, olx_y, new_x, new_y)
+	playint.boutons_pos_resize(mut app, old_x, old_y, new_x, new_y)
 
 	app.ctx.width = size.width
 	app.ctx.height = size.height
