@@ -415,7 +415,7 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 	}
 	mut new_y := y
 	if middle_height {
-		new_y -= cfg.size * text_split.len / 2
+		new_y += cfg.size * text_split.len
 	}
 
 	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + 10, 5,
