@@ -403,7 +403,7 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 
 	// Precalcul
 	for text in text_split {
-		lenght := text.len * 8 + 10
+		lenght := text.len * 8 + cfg.size
 		text_len << lenght
 
 		if lenght > max_len {
