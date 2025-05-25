@@ -18,7 +18,7 @@ mut:
 	text_cfg   gx.TextCfg
 	bouton_cfg gx.TextCfg
 
-	changing_options bool = true
+	changing_options bool
 	mouse_pos        Vec2[f32]
 
 	boutons_liste []playint.Bouton
@@ -51,8 +51,8 @@ fn on_init(mut app App) {
 	// app.opt.new_action(fonction, 'fonction_name', -1 or int(KeyCode. ))
 	app.boutons_liste << [
 		playint.Bouton{
-			text:           'Params'
-			pos:            Vec2[f32]{}
+			text:           'Options'
+			pos:            Vec2[f32]{30, 16}
 			fonction:       playint.option_pause
 			is_visible:     params_is_visible
 			is_actionnable: params_is_actionnable
@@ -104,7 +104,6 @@ fn (mut app App) main_menu_render() {
 	x := app.ctx.width / 2
 	y := app.ctx.height / 2
 	playint.text_rect_render(app.ctx, app.text_cfg, x, y, true, true, 'TITLE', transparency)
-	app.ctx.draw_circle_filled(x, y, 10, gx.red)
 }
 
 // main fn:
@@ -114,5 +113,5 @@ fn params_is_visible(mut app playint.Appli) bool {
 }
 
 fn params_is_actionnable(mut app playint.Appli) bool {
-	return !app.changing_options
+	return true
 }
