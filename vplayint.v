@@ -418,11 +418,11 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 		new_y -= cfg.size * text_split.len
 	}
 
-	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + 10,
+	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + cfg.size,
 		5, attenuation(gx.gray, transparency))
 	for id, text in text_split {
-		new_y += cfg.size * id
-		ctx.draw_text(int(new_x + 5), int(new_y + 5), text, cfg)
+		new_y += cfg.size * id + cfg.size/2
+		ctx.draw_text(int(new_x + cfg.size/2), int(new_y), text, cfg)
 	}
 }
 
