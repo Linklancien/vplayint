@@ -186,11 +186,11 @@ pub fn (mut opt Opt) init() {
 // Base fonctions
 fn none_fn(mut app Appli) {}
 
-fn force_close(mut app Appli) {
+pub fn force_close(mut app Appli) {
 	app.ctx.quit()
 }
 
-fn option_pause(mut app Appli) {
+pub fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
 }
 
@@ -338,7 +338,7 @@ fn point_is_in_cirle(circle_pos Vec2[f32], radius f32, mouse_pos Vec2[f32]) bool
 
 // Bouton
 pub struct Bouton {
-mut:
+pub mut:
 	text           string
 	cfg            gx.TextCfg
 	pos            Vec2[f32]
@@ -356,7 +356,7 @@ pub fn (btn Bouton) draw(mut app Appli) {
 	if btn.is_visible(mut app) {
 		mut transparency := u8(255)
 		if !btn.is_actionnable(mut app) || btn.check(mut app) {
-			transparency =  175
+			transparency = 175
 		}
 		text_rect_render(app.ctx, btn.cfg, btn.pos.x, btn.pos.y, true, true, btn.text,
 			transparency)
@@ -418,8 +418,8 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 		new_y -= cfg.size * text_split.len
 	}
 
-	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + 10, 5,
-		attenuation(gx.gray, transparency))
+	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + 10,
+		5, attenuation(gx.gray, transparency))
 	for id, text in text_split {
 		new_y += cfg.size * id
 		ctx.draw_text(int(new_x + 5), int(new_y + 5), text, cfg)
