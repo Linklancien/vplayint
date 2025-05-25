@@ -363,10 +363,10 @@ pub fn (btn Bouton) draw(mut app Appli) {
 	}
 }
 
-pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32) {
+pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32, old_x f32, olx_y f32, new_x f32, new_y f32) {
 	btn.pos = Vec2[f32]{
-		x: btn.pos.x * x_ratio
-		y: btn.pos.y * y_ratio
+		x: (btn.pos.x - old_x) * x_ratio + new_x
+		y: (btn.pos.y - old_y) * y_ratio + new_y
 	}
 }
 
@@ -385,9 +385,12 @@ pub fn boutons_draw(mut app Appli) {
 	}
 }
 
-pub fn boutons_pos_resize(mut app Appli, x_ratio f32, y_ratio f32) {
+pub fn boutons_pos_resize(mut app Appli, old_x f32, olx_y f32, new_x f32, new_y f32) {
+	x_ratio := f32(new_x / old_x)
+	y_ratio := f32(new_y / old_y)
+
 	for mut btn in app.boutons_liste {
-		btn.pos_resize(x_ratio, y_ratio)
+		btn.pos_resize(x_ratio, y_ratio, old_x, olx_y, new_x, new_y)
 	}
 }
 
@@ -421,8 +424,8 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + cfg.size,
 		5, attenuation(gx.gray, transparency))
 	for id, text in text_split {
-		new_y += cfg.size * id + cfg.size/2
-		ctx.draw_text(int(new_x + cfg.size/2), int(new_y), text, cfg)
+		new_y += cfg.size * id + cfg.size / 2
+		ctx.draw_text(int(new_x + cfg.size / 2), int(new_y), text, cfg)
 	}
 }
 

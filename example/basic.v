@@ -52,8 +52,8 @@ fn on_init(mut app App) {
 	app.boutons_liste << [
 		playint.Bouton{
 			text:           'Options'
-			pos:            Vec2[f32]{4*'Options'.len + 5, app.bouton_cfg.size}
-			cfg:			app.bouton_cfg
+			pos:            Vec2[f32]{4 * 'Options'.len + 5, app.bouton_cfg.size}
+			cfg:            app.bouton_cfg
 			fonction:       playint.option_pause
 			is_visible:     params_is_visible
 			is_actionnable: params_is_actionnable
@@ -85,14 +85,15 @@ fn on_move(x f32, y f32, mut app App) {
 
 fn on_resized(e &gg.Event, mut app App) {
 	size := gg.window_size()
+	old_x := app.ctx.width
+	old_y := app.ctx.height
+	new_x := size.width
+	new_y := size.height
 
-	x := f32(size.width / app.ctx.width)
-	y := f32(size.height / app.ctx.height)
+	playint.boutons_pos_resize(mut app, old_x, olx_y, new_x, new_y)
 
 	app.ctx.width = size.width
 	app.ctx.height = size.height
-
-	playint.boutons_pos_resize(mut app, x, y)
 }
 
 // main menu fn:
