@@ -95,6 +95,7 @@ fn (mut app App) main_menu_render(){
 	x := app.ctx.width/2
 	y := app.ctx.height/2
 	playint.text_rect_render(app.ctx, app.text_cfg, x, y, true, true, 'TITLE', transparency)
+	app.ctx.draw_circle_filled(x, y, 10, gx.red)
 }
 
 // main fn:
