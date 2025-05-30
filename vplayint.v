@@ -424,8 +424,8 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + cfg.size,
 		5, attenuation(gx.gray, transparency))
 	for id, text in text_split {
-		new_y += cfg.size
 		ctx.draw_text(int(new_x + cfg.size / 2), int(new_y), text, cfg)
+		new_y += cfg.size
 	}
 }
 
