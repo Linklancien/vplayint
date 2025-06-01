@@ -82,3 +82,8 @@ Good to know for an easy use:
 	app.ctx.height = size.height
   }
   ```
+
+- if you want to add a button, all you need is at least 3 function that all take only (mut Appli) in there arguments:
+   - ``function`` that is the fonction you want to call when the button is pressed
+   - ``is_visible`` that return a bool, true if your button is visible and false if it's not 
+   - ``is_actionnable`` that also return a true if the button is actionnable and false if it's not, most of the time it is the same as ``is_visible`` but with the ``if !changing_options{}``
