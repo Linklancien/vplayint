@@ -37,28 +37,29 @@ Good to know for an easy use:
     
     - the last argument is -1 if you don't key-bind your action or int(int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED))) ! Be aware, qwerty and azerty aren't support yet, but in game it works well
     - lastly, ``new_action`` need to be called on your a ``playint.Opt`` struct
-- the on_frame function is as followed:
-```
-fn on_frame(mut app App) {
+  - the on_frame function is as followed:
+  ```
+  fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.opt.settings_render(app)
 	playint.boutons_draw(mut app)
 	app.ctx.end()
-}
-```
-- the on_event function is simple you can base your's on the following:
-```
-fn on_event(e &gg.Event, mut app App) {
+  }
+  ```
+  - the on_event function is simple you can base your's on the following:
+  
+  ```
+  fn on_event(e &gg.Event, mut app App) {
 	playint.on_event(e, mut &app)
-}
-```
-- the on_move function is mean to get the position of your cursor ervery time it moves so the module know wich button is clickable
+  }
+  ```
+  - the on_move function is mean to get the position of your cursor ervery time it moves so the module know wich button is clickable
   ```
   fn on_move(x f32, y f32, mut app App) {
 	app.mouse_pos = Vec2[f32]{x, y}
   }
   ```
-- the on_click function is here to trigger the buttons:
+   - the on_click function is here to trigger the buttons:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	app.mouse_pos = Vec2[f32]{x, y}
@@ -66,7 +67,7 @@ fn on_event(e &gg.Event, mut app App) {
 	playint.boutons_check(mut app)
   }
   ```
-- the on_resized function is here to change the position of the button as your window extend or retract
+   - the on_resized function is here to change the position of the button as your window extend or retract
   ```
   fn on_resized(e &gg.Event, mut app App) {
 	size := gg.window_size()
