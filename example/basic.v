@@ -73,14 +73,14 @@ fn on_event(e &gg.Event, mut app App) {
 	playint.on_event(e, mut &app)
 }
 
+fn on_move(x f32, y f32, mut app App) {
+	app.mouse_pos = Vec2[f32]{x, y}
+}
+
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	app.mouse_pos = Vec2[f32]{x, y}
 	playint.check_boutons_options(mut app)
 	playint.boutons_check(mut app)
-}
-
-fn on_move(x f32, y f32, mut app App) {
-	app.mouse_pos = Vec2[f32]{x, y}
 }
 
 fn on_resized(e &gg.Event, mut app App) {
