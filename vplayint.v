@@ -372,7 +372,7 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32, old_x f32, old_y f3
 // Boutons fn
 pub fn boutons_check(mut app Appli) {
 	for btn in app.boutons_liste {
-		if btn.check(mut app) && btn.is_visible(mut app) && btn.is_actionnable(mut app) {
+		if btn.check(mut app) && btn.is_actionnable(mut app) {
 			btn.function(mut app)
 		}
 	}
