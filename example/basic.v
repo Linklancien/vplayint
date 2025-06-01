@@ -48,13 +48,13 @@ fn main() {
 }
 
 fn on_init(mut app App) {
-	// app.opt.new_action(fonction, 'fonction_name', -1 or int(KeyCode. ))
+	// app.opt.new_action(function, 'fonction_name', -1 or int(KeyCode. ))
 	app.boutons_liste << [
 		playint.Bouton{
 			text:           'Options'
 			pos:            Vec2[f32]{4 * 'Options'.len + 5, app.bouton_cfg.size}
 			cfg:            app.bouton_cfg
-			fonction:       playint.option_pause
+			function:       playint.option_pause
 			is_visible:     params_is_visible
 			is_actionnable: params_is_actionnable
 		},

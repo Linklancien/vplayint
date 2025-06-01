@@ -143,7 +143,6 @@ mut:
 
 	// Police
 	text_cfg   gx.TextCfg
-	bouton_cfg gx.TextCfg
 
 	changing_options bool
 	mouse_pos        Vec2[f32]
@@ -153,7 +152,7 @@ mut:
 
 pub struct Opt {
 mut:
-	// The fonction of the action
+	// The function of the action
 	actions_liste []fn (mut Appli)
 
 	// The name of the action
@@ -342,7 +341,7 @@ pub mut:
 	text           string
 	cfg            gx.TextCfg
 	pos            Vec2[f32]
-	fonction       fn (mut Appli)      @[required]
+	function       fn (mut Appli)      @[required]
 	is_visible     fn (mut Appli) bool @[required]
 	is_actionnable fn (mut Appli) bool @[required]
 }
@@ -374,7 +373,7 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32, old_x f32, old_y f3
 pub fn boutons_check(mut app Appli) {
 	for btn in app.boutons_liste {
 		if btn.check(mut app) && btn.is_visible(mut app) && btn.is_actionnable(mut app) {
-			btn.fonction(mut app)
+			btn.function(mut app)
 		}
 	}
 }
