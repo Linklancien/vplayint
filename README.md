@@ -20,7 +20,7 @@ Good to know for an easy use:
       boutons_liste []playint.Bouton
     }
    ```
-- you need to define your gg.Context whith the following functions:
+- you need to define your gg.Context with the following functions:
   ```
   init_fn:       on_init
   frame_fn:      on_frame
