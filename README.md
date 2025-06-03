@@ -6,7 +6,24 @@ use ```v install Linklancien.playint``` to download this module and then ```impo
 It use the module gg.
 
 Good to know for an easy use:
-- use a struct that possesses all the fiel of the Appli interface example:
+- use a struct that possesses all the fiel of the Appli interface:
+   ```
+   pub interface Appli {
+    mut:
+      ctx &gg.Context
+      opt Opt
+
+      // Police
+      text_cfg   gx.TextCfg
+
+      changing_options bool
+
+      boutons_liste []Bouton
+    } 
+   ```
+  This interface will be use to link your code and the information the module need. Such as the gg.Context or the Opt struct that manage all the links between inputs and their actions.
+
+ example of an App struct:
    ```
    struct App {
     mut:
@@ -17,6 +34,8 @@ Good to know for an easy use:
       changing_options bool
 
       boutons_liste []playint.Bouton
+
+      //... your own variables -->
     }
    ```
 - you need to define your gg.Context with the following functions:
@@ -29,7 +48,7 @@ Good to know for an easy use:
   resized_fn:    on_resized
   ```
   - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_liste`` array of your struct and by using the ``opt.new_action`` function.
-    Let's detail more the ``opt.new_action`` function, in order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
+    Let's detail more the ``opt.new_action`` function. In order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
     - the function need to only have (mut Appli) in it's arguments, but you can use ``if mut app is App{}`` or ``match app{App{}}``.
     
     - function_name is a string
