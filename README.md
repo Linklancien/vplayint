@@ -1,12 +1,12 @@
-A V module that manage the link between a key and it's action, also provide boutons.
+A V module that manages the link between a key and it's action, also provide boutons.
 
 It allows the change of the keybinds dynamically.
 
 use ```v install Linklancien.playint``` to download this module and then ```import linklancien.playint``` in your .v file to use it.
-It use the module gg.
+It uses the module gg.
 
 Good to know for an easy use:
-- use a struct that possesses all the fiel of the Appli interface:
+- use a struct that possesses all the fields of the Appli interface:
    ```
    pub interface Appli {
     mut:
@@ -21,8 +21,8 @@ Good to know for an easy use:
       boutons_list []Bouton
     } 
    ```
-  This interface will be use to link your code and the information the module need.  
-  Such as the gg.Context or the Opt struct that manage all the links between inputs and their actions.  
+  This interface will be uses to link your code and the informations the module needs.  
+  Such as the gg.Context or the Opt struct that manages all the links between inputs and their actions.  
 
  example of an App struct:
    ```
@@ -44,19 +44,16 @@ Good to know for an easy use:
   init_fn:       on_init
   frame_fn:      on_frame
   event_fn:      on_event
-  move_fn:       on_move
   click_fn:      on_click
   resized_fn:    on_resized
   ```
-  - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_list`` array of your struct and by using the ``opt.new_action`` function.
+  - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_list`` an array of your struct and by using the ``opt.new_action`` function.
     Let's detail more the ``opt.new_action`` function. In order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
-    - the function need to only have (mut Appli) in it's arguments. 
-    If you want to access other fiels of your App struct, you can use ``if mut app is App{}`` or ``match app{App{}}``.
-    
-    - function_name is a string
-    
+    - ``new_action`` need to be called on your a ``playint.Opt`` struct
+    - the function needs to only have ``(mut Appli)`` in it's arguments. 
+    If you want to access other fields of your App struct, you can use ``if mut app is App{}`` or ``match app{App{}}``, the type of app will change accordingly.  
+    - function_name is a string  
     - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) !  
-    - lastly, ``new_action`` need to be called on your a ``playint.Opt`` struct
 > [!CAUTION]
 > Be aware, qwerty and azerty aren't support yet, but in game it works well.
   - the on_frame function is as followed:
@@ -79,7 +76,7 @@ Good to know for an easy use:
   }
   ```
   You only need to call ``playint.on_event(e, mut &app)`` in it and the module will handle the interactions.  
-  You can use on_event for handle somme special event, for that, juste add your code after calling  ``playint.on_event(e, mut &app)``
+  You can use on_event to handle somme special event, for that, juste add your code after calling  ``playint.on_event(e, mut &app)``
   - the on_click function is here to trigger the buttons:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
@@ -105,6 +102,6 @@ Good to know for an easy use:
 
 - if you want to add a button, all you need is at least 3 function that all take only (mut Appli) in there arguments:   
    - ``function`` that is the fonction you want to call when the button is pressed.  
-   - ``is_visible`` that return a bool, true if your button is visible and false if it's not.  
-   - ``is_actionnable`` that also return a true if the button is actionnable and false if it's not.  
+   - ``is_visible`` that returns a bool, true if your button is visible and false if it's not.  
+   - ``is_actionnable`` that also returns a true if the button is actionnable and false if it's not.  
    Most of the time it is the same as ``is_visible`` but with the ``if !changing_options{} && ...``.  
