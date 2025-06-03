@@ -21,7 +21,8 @@ Good to know for an easy use:
       boutons_list []Bouton
     } 
    ```
-  This interface will be use to link your code and the information the module need. Such as the gg.Context or the Opt struct that manage all the links between inputs and their actions.
+  This interface will be use to link your code and the information the module need.  
+  Such as the gg.Context or the Opt struct that manage all the links between inputs and their actions.  
 
  example of an App struct:
    ```
@@ -54,7 +55,9 @@ Good to know for an easy use:
     
     - function_name is a string
     
-    - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) ! Be aware, qwerty and azerty aren't support yet, but in game it works well
+    - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) !  
+    > [!CAUTION]
+    > Be aware, qwerty and azerty aren't support yet, but in game it works well
     - lastly, ``new_action`` need to be called on your a ``playint.Opt`` struct
   - the on_frame function is as followed:
   ```
@@ -65,10 +68,10 @@ Good to know for an easy use:
 	app.ctx.end()
   }
   ```
-  ``app.opt.settings_render(app)`` is use to draw the settings panel when ``app.changing_options`` is true.
-  ``playint.boutons_draw(mut app)`` is use to draw all the buttons on ``app.boutons_list``.
-  You juste have to call those two fonction in between ``app.ctx.begin()`` and ``app.ctx.end()``.
-  You can put your code all around as you want.
+  ``app.opt.settings_render(app)`` is use to draw the settings panel when ``app.changing_options`` is true.  
+  ``playint.boutons_draw(mut app)`` is use to draw all the buttons on ``app.boutons_list``.  
+  You juste have to call those two fonction in between ``app.ctx.begin()`` and ``app.ctx.end()``.  
+  You can put your code all around as you want.  
   - the on_event function is simple you can base your's on the following:
   
   ```
@@ -99,7 +102,7 @@ Good to know for an easy use:
   }
   ```
 
-- if you want to add a button, all you need is at least 3 function that all take only (mut Appli) in there arguments:
-   - ``function`` that is the fonction you want to call when the button is pressed
-   - ``is_visible`` that return a bool, true if your button is visible and false if it's not 
-   - ``is_actionnable`` that also return a true if the button is actionnable and false if it's not, most of the time it is the same as ``is_visible`` but with the ``if !changing_options{}``
+- if you want to add a button, all you need is at least 3 function that all take only (mut Appli) in there arguments:   
+   - ``function`` that is the fonction you want to call when the button is pressed.  
+   - ``is_visible`` that return a bool, true if your button is visible and false if it's not.  
+   - ``is_actionnable`` that also return a true if the button is actionnable and false if it's not, most of the time it is the same as ``is_visible`` but with the ``if !changing_options{}``.  
