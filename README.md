@@ -58,7 +58,7 @@ Good to know for an easy use:
     - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) !  
     - lastly, ``new_action`` need to be called on your a ``playint.Opt`` struct
 > [!CAUTION]
-> Be aware, qwerty and azerty aren't support yet, but in game it works well
+> Be aware, qwerty and azerty aren't support yet, but in game it works well.
   - the on_frame function is as followed:
   ```
   fn on_frame(mut app App) {
@@ -73,20 +73,21 @@ Good to know for an easy use:
   You juste have to call those two fonction in between ``app.ctx.begin()`` and ``app.ctx.end()``.  
   You can put your code all around as you want.  
   - the on_event function is simple you can base your's on the following:
-  
   ```
   fn on_event(e &gg.Event, mut app App) {
 	playint.on_event(e, mut &app)
   }
   ```
-   - the on_click function is here to trigger the buttons:
+  You only need to call ``playint.on_event(e, mut &app)`` in it and the module will handle the interactions.  
+  You can use on_event for handle somme special event, for that, juste add your code after calling  ``playint.on_event(e, mut &app)``
+  - the on_click function is here to trigger the buttons:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	playint.check_boutons_options(mut app)
 	playint.boutons_check(mut app)
   }
   ```
-   - the on_resized function is here to change the position of the button as your window extend or retract
+  - the on_resized function is here to change the position of the button as your window extend or retract
   ```
   fn on_resized(e &gg.Event, mut app App) {
 	size := gg.window_size()
@@ -105,4 +106,5 @@ Good to know for an easy use:
 - if you want to add a button, all you need is at least 3 function that all take only (mut Appli) in there arguments:   
    - ``function`` that is the fonction you want to call when the button is pressed.  
    - ``is_visible`` that return a bool, true if your button is visible and false if it's not.  
-   - ``is_actionnable`` that also return a true if the button is actionnable and false if it's not, most of the time it is the same as ``is_visible`` but with the ``if !changing_options{}``.  
+   - ``is_actionnable`` that also return a true if the button is actionnable and false if it's not.  
+   Most of the time it is the same as ``is_visible`` but with the ``if !changing_options{} && ...``.  
