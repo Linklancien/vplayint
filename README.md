@@ -15,7 +15,6 @@ Good to know for an easy use:
       text_cfg   gx.TextCfg
 
       changing_options bool
-      mouse_pos        Vec2[f32]
 
       boutons_liste []playint.Bouton
     }
@@ -53,16 +52,9 @@ Good to know for an easy use:
 	playint.on_event(e, mut &app)
   }
   ```
-  - the on_move function is mean to get the position of your cursor ervery time it moves so the module know wich button is clickable
-  ```
-  fn on_move(x f32, y f32, mut app App) {
-	app.mouse_pos = Vec2[f32]{x, y}
-  }
-  ```
    - the on_click function is here to trigger the buttons:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
-	app.mouse_pos = Vec2[f32]{x, y}
 	playint.check_boutons_options(mut app)
 	playint.boutons_check(mut app)
   }

@@ -145,7 +145,6 @@ mut:
 	text_cfg   gx.TextCfg
 
 	changing_options bool
-	mouse_pos        Vec2[f32]
 
 	boutons_liste []Bouton
 }
@@ -290,7 +289,8 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 
 				mut transparency := u8(255)
 				circle_pos := Vec2[f32]{f32(x * app.opt.bouton_placement_proportion), y + 15}
-				if point_is_in_cirle(circle_pos, boutons_radius, app.mouse_pos) {
+				mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
+				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
 					transparency = 175
 				}
 
@@ -315,7 +315,8 @@ pub fn check_boutons_options(mut app Appli) {
 			if ind + app.opt.pause_scroll < app.opt.actions_names.len {
 				y := 115 + ind * 40
 				circle_pos := Vec2[f32]{f32(app.ctx.width * app.opt.bouton_placement_proportion / 2), y}
-				if point_is_in_cirle(circle_pos, boutons_radius, app.mouse_pos) {
+				mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
+				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
 					if app.opt.id_change != ind + app.opt.pause_scroll {
 						app.opt.id_change = ind + app.opt.pause_scroll
 					} else {
@@ -348,7 +349,8 @@ pub mut:
 
 // Bouton fn
 pub fn (btn Bouton) check(mut app Appli) bool {
-	return point_is_in_cirle(btn.pos, 20, app.mouse_pos)
+	mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
+	return point_is_in_cirle(btn.pos, 20, mouse_pos)
 }
 
 pub fn (btn Bouton) draw(mut app Appli) {

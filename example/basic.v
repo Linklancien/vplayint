@@ -19,7 +19,6 @@ mut:
 	bouton_cfg gx.TextCfg
 
 	changing_options bool
-	mouse_pos        Vec2[f32]
 
 	boutons_liste []playint.Bouton
 }
@@ -37,7 +36,6 @@ fn main() {
 		init_fn:       on_init
 		frame_fn:      on_frame
 		event_fn:      on_event
-		move_fn:       on_move
 		click_fn:      on_click
 		resized_fn:    on_resized
 		sample_count:  4
@@ -73,12 +71,7 @@ fn on_event(e &gg.Event, mut app App) {
 	playint.on_event(e, mut &app)
 }
 
-fn on_move(x f32, y f32, mut app App) {
-	app.mouse_pos = Vec2[f32]{x, y}
-}
-
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
-	app.mouse_pos = Vec2[f32]{x, y}
 	playint.check_boutons_options(mut app)
 	playint.boutons_check(mut app)
 }
