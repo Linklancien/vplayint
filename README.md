@@ -49,11 +49,12 @@ Good to know for an easy use:
   ```
   - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_liste`` array of your struct and by using the ``opt.new_action`` function.
     Let's detail more the ``opt.new_action`` function. In order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
-    - the function need to only have (mut Appli) in it's arguments, but you can use ``if mut app is App{}`` or ``match app{App{}}``.
+    - the function need to only have (mut Appli) in it's arguments. 
+    If you want to access other fiels of your App struct, you can use ``if mut app is App{}`` or ``match app{App{}}``.
     
     - function_name is a string
     
-    - the last argument is -1 if you don't key-bind your action or int(int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED))) ! Be aware, qwerty and azerty aren't support yet, but in game it works well
+    - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) ! Be aware, qwerty and azerty aren't support yet, but in game it works well
     - lastly, ``new_action`` need to be called on your a ``playint.Opt`` struct
   - the on_frame function is as followed:
   ```
