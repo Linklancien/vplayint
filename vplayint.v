@@ -146,7 +146,7 @@ mut:
 
 	changing_options bool
 
-	boutons_liste []Bouton
+	boutons_list []Bouton
 }
 
 pub struct Opt {
@@ -373,7 +373,7 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32, old_x f32, old_y f3
 
 // Boutons fn
 pub fn boutons_check(mut app Appli) {
-	for btn in app.boutons_liste {
+	for btn in app.boutons_list {
 		if btn.check(mut app) && btn.is_actionnable(mut app) {
 			btn.function(mut app)
 		}
@@ -381,7 +381,7 @@ pub fn boutons_check(mut app Appli) {
 }
 
 pub fn boutons_draw(mut app Appli) {
-	for btn in app.boutons_liste {
+	for btn in app.boutons_list {
 		btn.draw(mut app)
 	}
 }
@@ -390,7 +390,7 @@ pub fn boutons_pos_resize(mut app Appli, old_x f32, old_y f32, new_x f32, new_y 
 	x_ratio := f32(new_x / old_x)
 	y_ratio := f32(new_y / old_y)
 
-	for mut btn in app.boutons_liste {
+	for mut btn in app.boutons_list {
 		btn.pos_resize(x_ratio, y_ratio, old_x, old_y, new_x, new_y)
 	}
 }

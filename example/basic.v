@@ -20,7 +20,7 @@ mut:
 
 	changing_options bool
 
-	boutons_liste []playint.Bouton
+	boutons_list []playint.Bouton
 }
 
 fn main() {
@@ -47,7 +47,7 @@ fn main() {
 
 fn on_init(mut app App) {
 	// app.opt.new_action(function, 'fonction_name', -1 or int(KeyCode. ))
-	app.boutons_liste << [
+	app.boutons_list << [
 		playint.Bouton{
 			text:           'Options'
 			pos:            Vec2[f32]{4 * 'Options'.len + 5, app.bouton_cfg.size}

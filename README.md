@@ -18,7 +18,7 @@ Good to know for an easy use:
 
       changing_options bool
 
-      boutons_liste []Bouton
+      boutons_list []Bouton
     } 
    ```
   This interface will be use to link your code and the information the module need. Such as the gg.Context or the Opt struct that manage all the links between inputs and their actions.
@@ -33,7 +33,7 @@ Good to know for an easy use:
 
       changing_options bool
 
-      boutons_liste []playint.Bouton
+      boutons_list []playint.Bouton
 
       //... your own variables -->
     }
@@ -47,7 +47,7 @@ Good to know for an easy use:
   click_fn:      on_click
   resized_fn:    on_resized
   ```
-  - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_liste`` array of your struct and by using the ``opt.new_action`` function.
+  - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_list`` array of your struct and by using the ``opt.new_action`` function.
     Let's detail more the ``opt.new_action`` function. In order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
     - the function need to only have (mut Appli) in it's arguments. 
     If you want to access other fiels of your App struct, you can use ``if mut app is App{}`` or ``match app{App{}}``.
