@@ -57,8 +57,8 @@ Good to know for an easy use:
     
     - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) !  
     - lastly, ``new_action`` need to be called on your a ``playint.Opt`` struct
-> Be aware, qwerty and azerty aren't support yet, but in game it works well
 > [!CAUTION]
+> Be aware, qwerty and azerty aren't support yet, but in game it works well
   - the on_frame function is as followed:
   ```
   fn on_frame(mut app App) {
