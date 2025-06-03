@@ -65,6 +65,10 @@ Good to know for an easy use:
 	app.ctx.end()
   }
   ```
+  ``app.opt.settings_render(app)`` is use to draw the settings panel when ``app.changing_options`` is true.
+  ``playint.boutons_draw(mut app)`` is use to draw all the buttons on ``app.boutons_list``.
+  You juste have to call those two fonction in between ``app.ctx.begin()`` and ``app.ctx.end()``.
+  You can put your code all around as you want.
   - the on_event function is simple you can base your's on the following:
   
   ```
