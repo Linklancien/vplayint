@@ -42,20 +42,43 @@ Good to know for an easy use:
       boutons_list []Bouton
     }
    ```
-  This interface will be uses to link your code and the informations the module needs.  
+  This interface will be used to link your code and the informations the module needs.  
   You can easily implement it as shown in this example of an App struct:
    ```
    struct App {
       playint.Opt
     }
    ```
-- you need to define your gg.Context with the following functions:
+- you need to define your gg.Context, in your main function, with the following functions:
   ```
   init_fn:       on_init
   frame_fn:      on_frame
   event_fn:      on_event
   click_fn:      on_click
   resized_fn:    on_resized
+  ```
+  Here is an exemple of a main function:
+  ```
+  fn main() {
+	mut app := &App{}
+	app.ctx = gg.new_context(
+		fullscreen:    false
+		width:         100 * 8
+		height:        100 * 8
+		create_window: true
+		window_title:  '--'
+		user_data:     app
+		init_fn:       on_init
+		frame_fn:      on_frame
+		event_fn:      on_event
+		click_fn:      on_click
+		resized_fn:    on_resized
+		sample_count:  4
+		font_path:     font_path
+	)
+	app.init()
+	app.ctx.run()
+}
   ```
   - the on_init function is where you usually declare all your boutons, and the fonction that you want to be key-binded.  
     Respectively by adding them in the ``boutons_list`` an array of your struct.  
