@@ -204,10 +204,10 @@ mut:
 	boutons_list []Bouton
 }
 
-pub fn (mut app Appli) init() {
-	app.new_action(none_fn, 'none_fn', -1)
-	app.new_action(force_close, 'force close', int(KeyCode.f4))
-	app.new_action(option_pause, 'option pause', int(KeyCode.escape))
+pub fn (mut opt Opt) init() {
+	opt.new_action(none_fn, 'none_fn', -1)
+	opt.new_action(force_close, 'force close', int(KeyCode.f4))
+	opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
 }
 
 // Base fonctions
@@ -225,7 +225,7 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 	if app.id_change == -1 {
 		match e.typ {
 			.key_down {
-				app.input(int(e.key_code), mut app)
+				app.input(int(e.key_code))
 			}
 			.mouse_down {
 				match e.mouse_button {
@@ -299,38 +299,38 @@ pub fn (mut app Appli) new_action(action fn (mut Appli), name string, base_key_c
 	}
 }
 
-pub fn (mut app Appli) settings_render() {
-	if app.changing_options {
+pub fn (mut opt Opt) settings_render() {
+	if opt.changing_options {
 		for ind in 1 .. 10 {
-			true_ind := ind + app.pause_scroll
-			if true_ind < app.actions_names.len {
-				x := int(app.ctx.width / 2)
+			true_ind := ind + opt.pause_scroll
+			if true_ind < opt.actions_names.len {
+				x := int(opt.ctx.width / 2)
 				y := int(100 + ind * 40)
 
 				mut keys_codes_names := ''
-				if app.event_name_from_action[true_ind].len > 0 {
-					keys_codes_names = app.event_name_from_action[true_ind][0]
-					for name in app.event_name_from_action[true_ind][1..] {
+				if opt.event_name_from_action[true_ind].len > 0 {
+					keys_codes_names = opt.event_name_from_action[true_ind][0]
+					for name in opt.event_name_from_action[true_ind][1..] {
 						keys_codes_names += ', '
 						keys_codes_names += name
 					}
 				}
 
 				mut transparency := u8(255)
-				circle_pos := Vec2[f32]{f32(x * app.bouton_placement_proportion), y + 15}
-				mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
+				circle_pos := Vec2[f32]{f32(x * opt.bouton_placement_proportion), y + 15}
+				mouse_pos := Vec2[f32]{opt.ctx.mouse_pos_x, opt.ctx.mouse_pos_y}
 				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
 					transparency = 175
 				}
 
-				text_rect_render(app.ctx, app.text_cfg, x * app.description_placement_proportion,
-					y, false, false, (app.actions_names[true_ind] + ': ' + keys_codes_names),
+				text_rect_render(opt.ctx, opt.text_cfg, x * opt.description_placement_proportion,
+					y, false, false, (opt.actions_names[true_ind] + ': ' + keys_codes_names),
 					transparency)
 				mut color := gx.gray
-				if app.id_change == true_ind {
+				if opt.id_change == true_ind {
 					color = gx.red
 				}
-				app.ctx.draw_circle_filled(x * app.bouton_placement_proportion, y + 15,
+				opt.ctx.draw_circle_filled(x * opt.bouton_placement_proportion, y + 15,
 					boutons_radius, attenuation(color, transparency))
 			}
 		}
