@@ -204,10 +204,10 @@ mut:
 	boutons_list []Bouton
 }
 
-pub fn (mut opt Opt) init() {
-	opt.new_action(none_fn, 'none_fn', -1)
-	opt.new_action(force_close, 'force close', int(KeyCode.f4))
-	opt.new_action(option_pause, 'option pause', int(KeyCode.escape))
+pub fn (mut app Appli) init() {
+	app.new_action(none_fn, 'none_fn', -1)
+	app.new_action(force_close, 'force close', int(KeyCode.f4))
+	app.new_action(option_pause, 'option pause', int(KeyCode.escape))
 }
 
 // Base fonctions
@@ -242,75 +242,75 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app Appli) {
-	ind := opt.event_to_action[key_code]
-	opt.actions_liste[ind](mut app)
+fn (mut app Appli) input(key_code int) {
+	ind := app.event_to_action[key_code]
+	app.actions_liste[ind](mut app)
 }
 
-fn (mut opt Opt) key_change(e &gg.Event) {
+fn (mut app Appli) key_change(e &gg.Event) {
 	match e.typ {
 		.key_down {
-			opt.change(int(e.key_code))
+			app.change(int(e.key_code))
 		}
 		else {}
 	}
 }
 
-fn (mut opt Opt) change(key_code int) {
+fn (mut app Appli) change(key_code int) {
 	name := key_code_name[key_code]
 
 	// clean the old action
-	old_ind := opt.event_to_action[key_code]
+	old_ind := app.event_to_action[key_code]
 
 	mut new := []string{}
-	for elem in opt.event_name_from_action[old_ind] {
+	for elem in app.event_name_from_action[old_ind] {
 		if elem != name {
 			new << [elem]
 		}
 	}
 
-	opt.event_name_from_action[old_ind] = new
+	app.event_name_from_action[old_ind] = new
 
-	new_ind := opt.id_change
+	new_ind := app.id_change
 	if new_ind == old_ind {
 		// suppress the key
-		opt.event_to_action[key_code] = 0
+		app.event_to_action[key_code] = 0
 	} else {
 		// new action
-		opt.event_to_action[key_code] = new_ind
-		opt.event_name_from_action[new_ind] << [name]
+		app.event_to_action[key_code] = new_ind
+		app.event_name_from_action[new_ind] << [name]
 	}
 
 	// reset
-	opt.id_change = -1
+	app.id_change = -1
 }
 
-pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, base_key_code int) {
-	opt.actions_liste << [action]
-	opt.actions_names << [name]
-	opt.event_name_from_action << []string{}
+pub fn (mut app Appli) new_action(action fn (mut Appli), name string, base_key_code int) {
+	app.actions_liste << [action]
+	app.actions_names << [name]
+	app.event_name_from_action << []string{}
 
-	new_ind := opt.event_name_from_action.len - 1
+	new_ind := app.event_name_from_action.len - 1
 
 	// new action
 	if base_key_code != -1 {
-		opt.event_to_action[base_key_code] = new_ind
-		opt.event_name_from_action[new_ind] << [key_code_name[base_key_code]]
+		app.event_to_action[base_key_code] = new_ind
+		app.event_name_from_action[new_ind] << [key_code_name[base_key_code]]
 	}
 }
 
-pub fn (mut opt Opt) settings_render(app Appli) {
+pub fn (mut app Appli) settings_render() {
 	if app.changing_options {
 		for ind in 1 .. 10 {
-			true_ind := ind + opt.pause_scroll
-			if true_ind < opt.actions_names.len {
+			true_ind := ind + app.pause_scroll
+			if true_ind < app.actions_names.len {
 				x := int(app.ctx.width / 2)
 				y := int(100 + ind * 40)
 
 				mut keys_codes_names := ''
-				if opt.event_name_from_action[true_ind].len > 0 {
-					keys_codes_names = opt.event_name_from_action[true_ind][0]
-					for name in opt.event_name_from_action[true_ind][1..] {
+				if app.event_name_from_action[true_ind].len > 0 {
+					keys_codes_names = app.event_name_from_action[true_ind][0]
+					for name in app.event_name_from_action[true_ind][1..] {
 						keys_codes_names += ', '
 						keys_codes_names += name
 					}
@@ -324,7 +324,7 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 				}
 
 				text_rect_render(app.ctx, app.text_cfg, x * app.description_placement_proportion,
-					y, false, false, (opt.actions_names[true_ind] + ': ' + keys_codes_names),
+					y, false, false, (app.actions_names[true_ind] + ': ' + keys_codes_names),
 					transparency)
 				mut color := gx.gray
 				if app.id_change == true_ind {
