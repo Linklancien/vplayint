@@ -52,7 +52,7 @@ fn on_init(mut app App) {
 fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.settings_render()
-	app.boutons_draw()
+	app.boutons_draw(mut app)
 	app.main_menu_render()
 	app.ctx.end()
 }

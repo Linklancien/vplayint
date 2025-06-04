@@ -4,7 +4,7 @@ import gx
 import gg { KeyCode }
 import math.vec { Vec2 }
 
-const boutons_radius = 10
+const buttons_radius = 10
 
 const key_code_name = {
 	0:   ''
@@ -161,13 +161,13 @@ mut:
 	description_placement_proportion f32
 
 	// most likely between 1 & 2
-	bouton_placement_proportion f32
+	button_placement_proportion f32
 
 	text_cfg gx.TextCfg
 
 	changing_options bool
 
-	boutons_list []Bouton
+	buttons_list []Button
 }
 
 pub struct Opt {
@@ -195,13 +195,13 @@ mut:
 	description_placement_proportion f32 = 0.5
 
 	// most likely between 1 & 2
-	bouton_placement_proportion f32 = 1.5
+	button_placement_proportion f32 = 1.5
 
 	text_cfg gx.TextCfg
 
 	changing_options bool
 
-	boutons_list []Bouton
+	buttons_list []Button
 }
 
 pub fn (mut opt Opt) init() {
@@ -230,7 +230,7 @@ pub fn (mut opt Opt) on_event(e &gg.Event, mut app Appli) {
 			.mouse_down {
 				match e.mouse_button {
 					.left {
-						// check_boutons(e.mouse_x, e.mouse_y)
+						// check_buttons(e.mouse_x, e.mouse_y)
 					}
 					else {}
 				}
@@ -317,9 +317,9 @@ pub fn (mut opt Opt) settings_render() {
 				}
 
 				mut transparency := u8(255)
-				circle_pos := Vec2[f32]{f32(x * opt.bouton_placement_proportion), y + 15}
+				circle_pos := Vec2[f32]{f32(x * opt.button_placement_proportion), y + 15}
 				mouse_pos := Vec2[f32]{opt.ctx.mouse_pos_x, opt.ctx.mouse_pos_y}
-				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
+				if point_is_in_cirle(circle_pos, buttons_radius, mouse_pos) {
 					transparency = 175
 				}
 
@@ -330,22 +330,22 @@ pub fn (mut opt Opt) settings_render() {
 				if opt.id_change == true_ind {
 					color = gx.red
 				}
-				opt.ctx.draw_circle_filled(x * opt.bouton_placement_proportion, y + 15,
-					boutons_radius, attenuation(color, transparency))
+				opt.ctx.draw_circle_filled(x * opt.button_placement_proportion, y + 15,
+					buttons_radius, attenuation(color, transparency))
 			}
 		}
 	}
 }
 
 // Check
-pub fn (mut opt Opt) check_boutons_options() {
+pub fn (mut opt Opt) check_buttons_options() {
 	if opt.changing_options {
 		for ind in 1 .. 10 {
 			if ind + opt.pause_scroll < opt.actions_names.len {
 				y := 115 + ind * 40
-				circle_pos := Vec2[f32]{f32(opt.ctx.width * opt.bouton_placement_proportion / 2), y}
+				circle_pos := Vec2[f32]{f32(opt.ctx.width * opt.button_placement_proportion / 2), y}
 				mouse_pos := Vec2[f32]{opt.ctx.mouse_pos_x, opt.ctx.mouse_pos_y}
-				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
+				if point_is_in_cirle(circle_pos, buttons_radius, mouse_pos) {
 					if opt.id_change != ind + opt.pause_scroll {
 						opt.id_change = ind + opt.pause_scroll
 					} else {
@@ -365,8 +365,8 @@ fn point_is_in_cirle(circle_pos Vec2[f32], radius f32, mouse_pos Vec2[f32]) bool
 	return false
 }
 
-// Bouton
-pub struct Bouton {
+// Button
+pub struct Button {
 pub mut:
 	text           string
 	cfg            gx.TextCfg
@@ -376,13 +376,13 @@ pub mut:
 	is_actionnable fn (mut Appli) bool @[required]
 }
 
-// Bouton fn
-pub fn (btn Bouton) check(mut app Appli) bool {
+// Button fn
+pub fn (btn Button) check(mut app Appli) bool {
 	mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
 	return point_is_in_cirle(btn.pos, 20, mouse_pos)
 }
 
-pub fn (btn Bouton) draw(mut app Appli) {
+pub fn (btn Button) draw(mut app Appli) {
 	if btn.is_visible(mut app) {
 		mut transparency := u8(255)
 		if !btn.is_actionnable(mut app) || btn.check(mut app) {
@@ -393,33 +393,33 @@ pub fn (btn Bouton) draw(mut app Appli) {
 	}
 }
 
-pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32, old_x f32, old_y f32, new_x f32, new_y f32) {
+pub fn (mut btn Button) pos_resize(x_ratio f32, y_ratio f32, old_x f32, old_y f32, new_x f32, new_y f32) {
 	btn.pos = Vec2[f32]{
 		x: (btn.pos.x - old_x) * x_ratio + new_x
 		y: (btn.pos.y - old_y) * y_ratio + new_y
 	}
 }
 
-// Boutons fn
-pub fn (mut opt Opt) boutons_check(mut app Appli) {
-	for btn in opt.boutons_list {
+// Buttons fn
+pub fn (mut opt Opt) buttons_check(mut app Appli) {
+	for btn in opt.buttons_list {
 		if btn.check(mut app) && btn.is_actionnable(mut app) {
 			btn.function(mut app)
 		}
 	}
 }
 
-pub fn (mut opt Opt) boutons_draw() {
-	for btn in opt.boutons_list {
-		btn.draw(mut opt)
+pub fn (mut opt Opt) buttons_draw(mut app Appli) {
+	for btn in opt.buttons_list {
+		btn.draw(mut app)
 	}
 }
 
-pub fn (mut opt Opt) boutons_pos_resize(old_x f32, old_y f32, new_x f32, new_y f32) {
+pub fn (mut opt Opt) buttons_pos_resize(old_x f32, old_y f32, new_x f32, new_y f32) {
 	x_ratio := f32(new_x / old_x)
 	y_ratio := f32(new_y / old_y)
 
-	for mut btn in opt.boutons_list {
+	for mut btn in opt.buttons_list {
 		btn.pos_resize(x_ratio, y_ratio, old_x, old_y, new_x, new_y)
 	}
 }
