@@ -50,18 +50,18 @@ fn on_init(mut app App) {
 fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.settings_render()
-	playint.boutons_draw(mut app)
+	app.boutons_draw()
 	app.main_menu_render()
 	app.ctx.end()
 }
 
 fn on_event(e &gg.Event, mut app App) {
-	playint.on_event(e, mut &app)
+	app.on_event(e, mut &app)
 }
 
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
-	playint.check_boutons_options(mut app)
-	playint.boutons_check(mut app)
+	app.check_boutons_options()
+	app.boutons_check()
 }
 
 fn on_resized(e &gg.Event, mut app App) {
@@ -71,7 +71,7 @@ fn on_resized(e &gg.Event, mut app App) {
 	new_x := size.width
 	new_y := size.height
 
-	playint.boutons_pos_resize(mut app, old_x, old_y, new_x, new_y)
+	app.boutons_pos_resize(old_x, old_y, new_x, new_y)
 
 	app.ctx.width = size.width
 	app.ctx.height = size.height

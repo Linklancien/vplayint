@@ -11,32 +11,44 @@ Good to know for an easy use:
    pub interface Appli {
     mut:
       ctx &gg.Context
-      opt Opt
 
-      // Police
-      text_cfg   gx.TextCfg
+      // The function of the action
+      actions_liste []fn (mut Appli)
+
+      // The name of the action
+      actions_names []string
+
+      // The key to get an action from an event
+      event_to_action map[int]int
+
+      // The name of the event that lead to an action
+      event_name_from_action [][]string
+
+      // Changes,  -1 -> no change
+      id_change int
+
+      pause_scroll int
+
+      // most likely between 0 & 1
+      description_placement_proportion f32
+
+      // most likely between 1 & 2
+      bouton_placement_proportion f32
+
+      text_cfg gx.TextCfg
 
       changing_options bool
 
       boutons_list []Bouton
-    } 
+    }
    ```
   This interface will be uses to link your code and the informations the module needs.  
-  Such as the gg.Context or the Opt struct that manages all the links between inputs and their actions.  
+  You can easily implement it as followed
 
  example of an App struct:
    ```
    struct App {
-    mut:
-      ctx &gg.Context = unsafe { nil }
-      opt playint.Opt
-      text_cfg   gx.TextCfg
-
-      changing_options bool
-
-      boutons_list []playint.Bouton
-
-      //... your own variables -->
+      playint.Opt
     }
    ```
 - you need to define your gg.Context with the following functions:
@@ -50,7 +62,7 @@ Good to know for an easy use:
   - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_list`` an array of your struct and by using the ``opt.new_action`` function.
     Let's detail more the ``opt.new_action`` function. In order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
     - ``new_action`` need to be called on your a ``playint.Opt`` struct
-    - the function needs to only have ``(mut Appli)`` in it's arguments. 
+    - the function needs to only have ``(mut Appli)`` as it's arguments. 
     If you want to access other fields of your App struct, you can use ``if mut app is App{}`` or ``match app{App{}}``, the type of app will change accordingly.  
     - function_name is a string  
     - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) !  
@@ -60,28 +72,28 @@ Good to know for an easy use:
   ```
   fn on_frame(mut app App) {
 	app.ctx.begin()
-	app.opt.settings_render(app)
-	playint.boutons_draw(mut app)
+	app.settings_render()
+	app.boutons_draw()
 	app.ctx.end()
   }
   ```
-  ``app.opt.settings_render(app)`` is use to draw the settings panel when ``app.changing_options`` is true.  
-  ``playint.boutons_draw(mut app)`` is use to draw all the buttons on ``app.boutons_list``.  
+  ``app.settings_render()`` is use to draw the settings panel when ``app.changing_options`` is true.  
+  ``app.boutons_draw()`` is use to draw all the buttons on ``app.boutons_list``.  
   You juste have to call those two fonction in between ``app.ctx.begin()`` and ``app.ctx.end()``.  
   You can put your code all around as you want.  
   - the on_event function is simple you can base your's on the following:
   ```
   fn on_event(e &gg.Event, mut app App) {
-	playint.on_event(e, mut &app)
+	app.on_event(e, mut &app)
   }
   ```
-  You only need to call ``playint.on_event(e, mut &app)`` in it and the module will handle the interactions.  
-  You can use on_event to handle somme special event, for that, juste add your code after calling  ``playint.on_event(e, mut &app)``
+  You only need to call ``app.on_event(e, mut &app)`` in it and the module will handle the interactions.  
+  You can use on_event to handle somme special event, for that, juste add your code after calling  ``app.on_event(e, mut &app)``
   - the on_click function is here to trigger the buttons:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
-	playint.check_boutons_options(mut app)
-	playint.boutons_check(mut app)
+	app.check_boutons_options()
+	app.boutons_check()
   }
   ```
   - the on_resized function is here to change the position of the button as your window extend or retract
@@ -93,7 +105,7 @@ Good to know for an easy use:
 	new_x := size.width
 	new_y := size.height
 
-	playint.boutons_pos_resize(mut app, old_x, old_y, new_x, new_y)
+	app.boutons_pos_resize(old_x, old_y, new_x, new_y)
 
 	app.ctx.width = size.width
 	app.ctx.height = size.height

@@ -211,7 +211,7 @@ pub fn (mut opt Opt) init() {
 }
 
 // Base fonctions
-fn none_fn(mut app Appli) {}
+fn none_fn(mut opt Appli) {}
 
 pub fn force_close(mut app Appli) {
 	app.ctx.quit()
@@ -221,11 +221,11 @@ pub fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
 }
 
-pub fn on_event(e &gg.Event, mut app Appli) {
-	if app.id_change == -1 {
+pub fn (mut opt Opt) on_event(e &gg.Event) {
+	if opt.id_change == -1 {
 		match e.typ {
 			.key_down {
-				app.input(int(e.key_code))
+				opt.input(int(e.key_code))
 			}
 			.mouse_down {
 				match e.mouse_button {
@@ -238,7 +238,7 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 			else {}
 		}
 	} else {
-		app.key_change(e)
+		opt.key_change(e)
 	}
 }
 
@@ -401,25 +401,25 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32, old_x f32, old_y f3
 }
 
 // Boutons fn
-pub fn boutons_check(mut app Appli) {
-	for btn in app.boutons_list {
-		if btn.check(mut app) && btn.is_actionnable(mut app) {
-			btn.function(mut app)
+pub fn (mut opt Opt) boutons_check() {
+	for btn in opt.boutons_list {
+		if btn.check(mut opt) && btn.is_actionnable(mut opt) {
+			btn.function(mut opt)
 		}
 	}
 }
 
-pub fn boutons_draw(mut app Appli) {
-	for btn in app.boutons_list {
-		btn.draw(mut app)
+pub fn (mut opt Opt) boutons_draw() {
+	for btn in opt.boutons_list {
+		btn.draw(mut opt)
 	}
 }
 
-pub fn boutons_pos_resize(mut app Appli, old_x f32, old_y f32, new_x f32, new_y f32) {
+pub fn (mut opt Appli) boutons_pos_resize(old_x f32, old_y f32, new_x f32, new_y f32) {
 	x_ratio := f32(new_x / old_x)
 	y_ratio := f32(new_y / old_y)
 
-	for mut btn in app.boutons_list {
+	for mut btn in opt.boutons_list {
 		btn.pos_resize(x_ratio, y_ratio, old_x, old_y, new_x, new_y)
 	}
 }
