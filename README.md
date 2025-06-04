@@ -74,7 +74,7 @@ Good to know for an easy use:
 		click_fn:      on_click
 		resized_fn:    on_resized
 		sample_count:  4
-		font_path:     font_path
+		font_path:     playint.font_path
 	)
 	app.init()
 	app.ctx.run()
