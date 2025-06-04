@@ -172,7 +172,7 @@ mut:
 
 pub struct Opt {
 mut:
-	ctx &gg.Context
+	ctx &gg.Context  = unsafe { nil }
 
 	// The function of the action
 	actions_liste []fn (mut Appli)
