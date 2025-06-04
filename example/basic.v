@@ -56,7 +56,7 @@ fn on_frame(mut app App) {
 }
 
 fn on_event(e &gg.Event, mut app App) {
-	app.on_event(e, mut &app)
+	app.on_event(e)
 }
 
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {

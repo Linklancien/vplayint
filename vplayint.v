@@ -242,15 +242,15 @@ pub fn (mut opt Opt) on_event(e &gg.Event) {
 	}
 }
 
-fn (mut app Appli) input(key_code int) {
+fn (mut opt Opt) input(key_code int) {
 	ind := app.event_to_action[key_code]
-	app.actions_liste[ind](mut app)
+	opt.actions_liste[ind](mut app)
 }
 
-fn (mut app Appli) key_change(e &gg.Event) {
+fn (mut opt Opt) key_change(e &gg.Event) {
 	match e.typ {
 		.key_down {
-			app.change(int(e.key_code))
+			opt.change(int(e.key_code))
 		}
 		else {}
 	}
@@ -285,17 +285,17 @@ fn (mut app Appli) change(key_code int) {
 	app.id_change = -1
 }
 
-pub fn (mut app Appli) new_action(action fn (mut Appli), name string, base_key_code int) {
-	app.actions_liste << [action]
-	app.actions_names << [name]
-	app.event_name_from_action << []string{}
+pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, base_key_code int) {
+	opt.actions_liste << [action]
+	opt.actions_names << [name]
+	opt.event_name_from_action << []string{}
 
-	new_ind := app.event_name_from_action.len - 1
+	new_ind := opt.event_name_from_action.len - 1
 
 	// new action
 	if base_key_code != -1 {
-		app.event_to_action[base_key_code] = new_ind
-		app.event_name_from_action[new_ind] << [key_code_name[base_key_code]]
+		opt.event_to_action[base_key_code] = new_ind
+		opt.event_name_from_action[new_ind] << [key_code_name[base_key_code]]
 	}
 }
 
@@ -338,18 +338,18 @@ pub fn (mut opt Opt) settings_render() {
 }
 
 // Check
-pub fn check_boutons_options(mut app Appli) {
-	if app.changing_options {
+pub fn (mut opt Opt) check_boutons_options() {
+	if opt.changing_options {
 		for ind in 1 .. 10 {
-			if ind + app.pause_scroll < app.actions_names.len {
+			if ind + opt.pause_scroll < opt.actions_names.len {
 				y := 115 + ind * 40
-				circle_pos := Vec2[f32]{f32(app.ctx.width * app.bouton_placement_proportion / 2), y}
-				mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
+				circle_pos := Vec2[f32]{f32(opt.ctx.width * opt.bouton_placement_proportion / 2), y}
+				mouse_pos := Vec2[f32]{opt.ctx.mouse_pos_x, opt.ctx.mouse_pos_y}
 				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
-					if app.id_change != ind + app.pause_scroll {
-						app.id_change = ind + app.pause_scroll
+					if opt.id_change != ind + opt.pause_scroll {
+						opt.id_change = ind + opt.pause_scroll
 					} else {
-						app.id_change = 0
+						opt.id_change = 0
 					}
 					break
 				}
@@ -415,7 +415,7 @@ pub fn (mut opt Opt) boutons_draw() {
 	}
 }
 
-pub fn (mut opt Appli) boutons_pos_resize(old_x f32, old_y f32, new_x f32, new_y f32) {
+pub fn (mut opt Opt) boutons_pos_resize(old_x f32, old_y f32, new_x f32, new_y f32) {
 	x_ratio := f32(new_x / old_x)
 	y_ratio := f32(new_y / old_y)
 
