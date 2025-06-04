@@ -63,7 +63,7 @@ fn on_event(e &gg.Event, mut app App) {
 
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	app.check_boutons_options()
-	app.boutons_check()
+	app.boutons_check(mut app)
 }
 
 fn on_resized(e &gg.Event, mut app App) {

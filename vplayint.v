@@ -242,7 +242,7 @@ pub fn (mut opt Opt) on_event(e &gg.Event, mut app Appli) {
 	}
 }
 
-fn (mut opt Opt) input(key_code int, mut app) {
+fn (mut opt Opt) input(key_code int, mut app Appli) {
 	ind := opt.event_to_action[key_code]
 	opt.actions_liste[ind](mut app)
 }
@@ -401,10 +401,10 @@ pub fn (mut btn Bouton) pos_resize(x_ratio f32, y_ratio f32, old_x f32, old_y f3
 }
 
 // Boutons fn
-pub fn (mut opt Opt) boutons_check() {
+pub fn (mut opt Opt) boutons_check(mut app Appli) {
 	for btn in opt.boutons_list {
-		if btn.check(mut opt) && btn.is_actionnable(mut opt) {
-			btn.function(mut opt)
+		if btn.check(mut app) && btn.is_actionnable(mut app) {
+			btn.function(mut app)
 		}
 	}
 }
