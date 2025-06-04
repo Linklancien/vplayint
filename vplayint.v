@@ -140,8 +140,7 @@ pub interface Appli {
 mut:
 	ctx &gg.Context
 	opt Opt
-
-	// Police
+	
 	text_cfg   gx.TextCfg
 
 	changing_options bool

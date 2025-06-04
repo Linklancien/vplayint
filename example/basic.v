@@ -13,10 +13,8 @@ struct App {
 mut:
 	ctx &gg.Context = unsafe { nil }
 	opt playint.Opt
-
-	// Police
+	
 	text_cfg   gx.TextCfg
-	bouton_cfg gx.TextCfg
 
 	changing_options bool
 
@@ -50,8 +48,7 @@ fn on_init(mut app App) {
 	app.boutons_list << [
 		playint.Bouton{
 			text:           'Options'
-			pos:            Vec2[f32]{4 * 'Options'.len + 5, app.bouton_cfg.size}
-			cfg:            app.bouton_cfg
+			pos:            Vec2[f32]{4 * 'Options'.len + 5, 16}
 			function:       playint.option_pause
 			is_visible:     params_is_visible
 			is_actionnable: params_is_actionnable
