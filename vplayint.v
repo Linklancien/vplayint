@@ -3,6 +3,9 @@ module playint
 import gx
 import gg { KeyCode }
 import math.vec { Vec2 }
+import os
+
+pub const font_path = os.resource_abs_path('FontMono.ttf') 
 
 const boutons_radius = 10
 

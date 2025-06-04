@@ -1,10 +1,10 @@
 module main
 
 import linklancien.playint
-import os
 import gg
 import math.vec { Vec2 }
 
+import os
 const font_path = os.resource_abs_path('FontMono.ttf')
 const bg_color = gg.Color{0, 0, 0, 255}
 
