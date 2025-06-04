@@ -78,7 +78,7 @@ Good to know for an easy use:
 	)
 	app.init()
 	app.ctx.run()
-}
+	}
   ```
   - the on_init function is where you usually declare all your boutons, and the fonction that you want to be key-binded.  
     Respectively by adding them in the ``boutons_list`` an array of your struct.  
