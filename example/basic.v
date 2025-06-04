@@ -3,13 +3,13 @@ module main
 import linklancien.playint
 import os
 import gg
-import gx
 import math.vec { Vec2 }
 
 const font_path = os.resource_abs_path('FontMono.ttf')
 const bg_color = gg.Color{0, 0, 0, 255}
 
-struct App {playint.Opt
+struct App {
+	playint.Opt
 }
 
 fn main() {

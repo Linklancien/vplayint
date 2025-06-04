@@ -137,7 +137,7 @@ const key_code_name = {
 }
 
 pub interface Appli {
-	mut:
+mut:
 	ctx &gg.Context
 
 	// The function of the action
@@ -153,17 +153,17 @@ pub interface Appli {
 	event_name_from_action [][]string
 
 	// Changes,  -1 -> no change
-	id_change int = -1
+	id_change int
 
 	pause_scroll int
 
 	// most likely between 0 & 1
-	description_placement_proportion f32 = 0.5
+	description_placement_proportion f32
 
 	// most likely between 1 & 2
-	bouton_placement_proportion f32 = 1.5
+	bouton_placement_proportion f32
 
-	text_cfg   gx.TextCfg
+	text_cfg gx.TextCfg
 
 	changing_options bool
 
@@ -197,7 +197,7 @@ mut:
 	// most likely between 1 & 2
 	bouton_placement_proportion f32 = 1.5
 
-	text_cfg   gx.TextCfg
+	text_cfg gx.TextCfg
 
 	changing_options bool
 
@@ -453,8 +453,8 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 
 	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + cfg.size,
 		5, attenuation(gx.gray, transparency))
-		
-	new_y += cfg.size/2
+
+	new_y += cfg.size / 2
 	for text in text_split {
 		ctx.draw_text(int(new_x + cfg.size / 2), int(new_y), text, cfg)
 		new_y += cfg.size
