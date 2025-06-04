@@ -256,33 +256,33 @@ fn (mut opt Opt) key_change(e &gg.Event) {
 	}
 }
 
-fn (mut app Appli) change(key_code int) {
+fn (mut opt Opt) change(key_code int) {
 	name := key_code_name[key_code]
 
 	// clean the old action
-	old_ind := app.event_to_action[key_code]
+	old_ind := opt.event_to_action[key_code]
 
 	mut new := []string{}
-	for elem in app.event_name_from_action[old_ind] {
+	for elem in opt.event_name_from_action[old_ind] {
 		if elem != name {
 			new << [elem]
 		}
 	}
 
-	app.event_name_from_action[old_ind] = new
+	opt.event_name_from_action[old_ind] = new
 
-	new_ind := app.id_change
+	new_ind := opt.id_change
 	if new_ind == old_ind {
 		// suppress the key
-		app.event_to_action[key_code] = 0
+		opt.event_to_action[key_code] = 0
 	} else {
 		// new action
-		app.event_to_action[key_code] = new_ind
-		app.event_name_from_action[new_ind] << [name]
+		opt.event_to_action[key_code] = new_ind
+		opt.event_name_from_action[new_ind] << [name]
 	}
 
 	// reset
-	app.id_change = -1
+	opt.id_change = -1
 }
 
 pub fn (mut opt Opt) new_action(action fn (mut Appli), name string, base_key_code int) {
