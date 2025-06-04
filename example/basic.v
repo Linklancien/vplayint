@@ -4,6 +4,10 @@ import linklancien.playint
 import gg
 import math.vec { Vec2 }
 
+import os
+
+const font_path = os.resource_abs_path('FontMono.ttf') 
+
 const bg_color = gg.Color{0, 0, 0, 255}
 
 struct App {
@@ -26,7 +30,7 @@ fn main() {
 		click_fn:      on_click
 		resized_fn:    on_resized
 		sample_count:  4
-		font_path:     playint.font_path
+		font_path:     font_path
 	)
 	app.init()
 	app.ctx.run()
