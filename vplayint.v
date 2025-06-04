@@ -243,8 +243,8 @@ pub fn (mut opt Opt) on_event(e &gg.Event) {
 }
 
 fn (mut opt Opt) input(key_code int) {
-	ind := app.event_to_action[key_code]
-	opt.actions_liste[ind](mut app)
+	ind := opt.event_to_action[key_code]
+	opt.actions_liste[ind](mut opt)
 }
 
 fn (mut opt Opt) key_change(e &gg.Event) {
