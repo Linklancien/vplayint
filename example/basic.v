@@ -9,16 +9,7 @@ import math.vec { Vec2 }
 const font_path = os.resource_abs_path('FontMono.ttf')
 const bg_color = gg.Color{0, 0, 0, 255}
 
-struct App {
-mut:
-	ctx &gg.Context = unsafe { nil }
-	opt playint.Opt
-	
-	text_cfg   gx.TextCfg
-
-	changing_options bool
-
-	boutons_list []playint.Bouton
+struct App {playint.Opt
 }
 
 fn main() {
@@ -39,12 +30,12 @@ fn main() {
 		sample_count:  4
 		font_path:     font_path
 	)
-	app.opt.init()
+	app.init()
 	app.ctx.run()
 }
 
 fn on_init(mut app App) {
-	// app.opt.new_action(function, 'fonction_name', -1 or int(KeyCode. ))
+	// app.new_action(function, 'fonction_name', -1 or int(KeyCode. ))
 	app.boutons_list << [
 		playint.Bouton{
 			text:           'Options'
@@ -58,7 +49,7 @@ fn on_init(mut app App) {
 
 fn on_frame(mut app App) {
 	app.ctx.begin()
-	app.opt.settings_render(app)
+	app.settings_render(app)
 	playint.boutons_draw(mut app)
 	app.main_menu_render()
 	app.ctx.end()

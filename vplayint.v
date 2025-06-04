@@ -137,19 +137,13 @@ const key_code_name = {
 }
 
 pub interface Appli {
-mut:
-	ctx &gg.Context
-	opt Opt
-	
-	text_cfg   gx.TextCfg
-
-	changing_options bool
-
-	boutons_list []Bouton
+	Opt
 }
 
 pub struct Opt {
 mut:
+	ctx &gg.Context
+
 	// The function of the action
 	actions_liste []fn (mut Appli)
 
@@ -172,6 +166,12 @@ mut:
 
 	// most likely between 1 & 2
 	bouton_placement_proportion f32 = 1.5
+
+	text_cfg   gx.TextCfg
+
+	changing_options bool
+
+	boutons_list []Bouton
 }
 
 pub fn (mut opt Opt) init() {
@@ -192,10 +192,10 @@ pub fn option_pause(mut app Appli) {
 }
 
 pub fn on_event(e &gg.Event, mut app Appli) {
-	if app.opt.id_change == -1 {
+	if app.id_change == -1 {
 		match e.typ {
 			.key_down {
-				app.opt.input(int(e.key_code), mut app)
+				app.input(int(e.key_code), mut app)
 			}
 			.mouse_down {
 				match e.mouse_button {
@@ -208,7 +208,7 @@ pub fn on_event(e &gg.Event, mut app Appli) {
 			else {}
 		}
 	} else {
-		app.opt.key_change(e)
+		app.key_change(e)
 	}
 }
 
@@ -287,20 +287,20 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 				}
 
 				mut transparency := u8(255)
-				circle_pos := Vec2[f32]{f32(x * app.opt.bouton_placement_proportion), y + 15}
+				circle_pos := Vec2[f32]{f32(x * app.bouton_placement_proportion), y + 15}
 				mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
 				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
 					transparency = 175
 				}
 
-				text_rect_render(app.ctx, app.text_cfg, x * app.opt.description_placement_proportion,
+				text_rect_render(app.ctx, app.text_cfg, x * app.description_placement_proportion,
 					y, false, false, (opt.actions_names[true_ind] + ': ' + keys_codes_names),
 					transparency)
 				mut color := gx.gray
-				if app.opt.id_change == true_ind {
+				if app.id_change == true_ind {
 					color = gx.red
 				}
-				app.ctx.draw_circle_filled(x * app.opt.bouton_placement_proportion, y + 15,
+				app.ctx.draw_circle_filled(x * app.bouton_placement_proportion, y + 15,
 					boutons_radius, attenuation(color, transparency))
 			}
 		}
@@ -311,15 +311,15 @@ pub fn (mut opt Opt) settings_render(app Appli) {
 pub fn check_boutons_options(mut app Appli) {
 	if app.changing_options {
 		for ind in 1 .. 10 {
-			if ind + app.opt.pause_scroll < app.opt.actions_names.len {
+			if ind + app.pause_scroll < app.actions_names.len {
 				y := 115 + ind * 40
-				circle_pos := Vec2[f32]{f32(app.ctx.width * app.opt.bouton_placement_proportion / 2), y}
+				circle_pos := Vec2[f32]{f32(app.ctx.width * app.bouton_placement_proportion / 2), y}
 				mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
 				if point_is_in_cirle(circle_pos, boutons_radius, mouse_pos) {
-					if app.opt.id_change != ind + app.opt.pause_scroll {
-						app.opt.id_change = ind + app.opt.pause_scroll
+					if app.id_change != ind + app.pause_scroll {
+						app.id_change = ind + app.pause_scroll
 					} else {
-						app.opt.id_change = 0
+						app.id_change = 0
 					}
 					break
 				}
