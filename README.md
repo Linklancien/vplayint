@@ -90,7 +90,7 @@ Good to know for an easy use:
 
     TYou key-binded a function by using the ``app.new_action`` function.  
     You have to give in order: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
-    - ``new_action`` need to be called on your a ``playint.Opt`` struct
+    - ``new_action`` needs to be called on your a ``playint.Opt`` struct
     - the function needs to be such as ``fn (mut Appli)``. 
     If you want to access fields that are not in Appli, you can use ``if mut app is App{}`` or ``match app{App{}}``, the type of app will change accordingly.  
     - function_name is a string  
