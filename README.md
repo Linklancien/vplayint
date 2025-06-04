@@ -57,8 +57,8 @@ Good to know for an easy use:
   click_fn:      on_click
   resized_fn:    on_resized
   ```
-  - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_list`` an array of your struct and by using the ``opt.new_action`` function.
-    Let's detail more the ``opt.new_action`` function. In order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
+  - the on_init function is where you declare all your boutons, and the fonction that you want to be key-binded. Respectively by adding them in the ``boutons_list`` an array of your struct and by using the ``app.new_action`` function.
+    Let's detail more the ``app.new_action`` function. In order, you have to give: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
     - ``new_action`` need to be called on your a ``playint.Opt`` struct
     - the function needs to only have ``(mut Appli)`` as it's arguments. 
     If you want to access other fields of your App struct, you can use ``if mut app is App{}`` or ``match app{App{}}``, the type of app will change accordingly.  
