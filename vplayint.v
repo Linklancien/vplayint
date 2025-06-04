@@ -137,7 +137,37 @@ const key_code_name = {
 }
 
 pub interface Appli {
-	Opt
+	mut:
+	ctx &gg.Context
+
+	// The function of the action
+	actions_liste []fn (mut Appli)
+
+	// The name of the action
+	actions_names []string
+
+	// The key to get an action from an event
+	event_to_action map[int]int
+
+	// The name of the event that lead to an action
+	event_name_from_action [][]string
+
+	// Changes,  -1 -> no change
+	id_change int = -1
+
+	pause_scroll int
+
+	// most likely between 0 & 1
+	description_placement_proportion f32 = 0.5
+
+	// most likely between 1 & 2
+	bouton_placement_proportion f32 = 1.5
+
+	text_cfg   gx.TextCfg
+
+	changing_options bool
+
+	boutons_list []Bouton
 }
 
 pub struct Opt {
