@@ -102,7 +102,7 @@ Good to know for an easy use:
   fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.settings_render()
-	app.boutons_draw()
+	app.boutons_draw(mut app)
 	app.ctx.end()
   }
   ```
@@ -122,7 +122,7 @@ Good to know for an easy use:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
 	app.check_boutons_options()
-	app.boutons_check()
+	app.boutons_check(mut app)
   }
   ```
   - the on_resized function is here to change the position of the button as your window extend or retract
