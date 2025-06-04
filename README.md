@@ -43,9 +43,7 @@ Good to know for an easy use:
     }
    ```
   This interface will be uses to link your code and the informations the module needs.  
-  You can easily implement it as followed
-
- example of an App struct:
+  You can easily implement it as shown in this example of an App struct:
    ```
    struct App {
       playint.Opt
