@@ -221,11 +221,11 @@ pub fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
 }
 
-pub fn (mut opt Opt) on_event(e &gg.Event) {
+pub fn (mut opt Opt) on_event(e &gg.Event, mut app Appli) {
 	if opt.id_change == -1 {
 		match e.typ {
 			.key_down {
-				opt.input(int(e.key_code))
+				opt.input(int(e.key_code), mut app)
 			}
 			.mouse_down {
 				match e.mouse_button {
@@ -242,9 +242,9 @@ pub fn (mut opt Opt) on_event(e &gg.Event) {
 	}
 }
 
-fn (mut opt Opt) input(key_code int) {
+fn (mut opt Opt) input(key_code int, mut app) {
 	ind := opt.event_to_action[key_code]
-	opt.actions_liste[ind](mut opt)
+	opt.actions_liste[ind](mut app)
 }
 
 fn (mut opt Opt) key_change(e &gg.Event) {

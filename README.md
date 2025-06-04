@@ -113,11 +113,11 @@ Good to know for an easy use:
   - the on_event function is simple you can base your's on the following:
   ```
   fn on_event(e &gg.Event, mut app App) {
-	app.on_event(e)
+	app.on_event(e, mut app)
   }
   ```
-  You only need to call ``app.on_event(e)`` in it and the module will handle the interactions.  
-  You can use on_event to handle somme special event, for that, juste add your code after calling  ``app.on_event(e)``
+  You only need to call ``app.on_event(e, mut app)`` in it and the module will handle the interactions.  
+  You can use on_event to handle somme special event, for that, juste add your code after calling  ``app.on_event(e, mut app)``
   - the on_click function is here to trigger the buttons:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
