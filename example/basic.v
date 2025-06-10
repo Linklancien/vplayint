@@ -3,10 +3,9 @@ module main
 import linklancien.playint
 import gg
 import math.vec { Vec2 }
-
 import os
 
-const font_path = os.resource_abs_path('FontMono.ttf') 
+const font_path = os.resource_abs_path('FontMono.ttf')
 
 const bg_color = gg.Color{0, 0, 0, 255}
 
@@ -38,8 +37,8 @@ fn main() {
 
 fn on_init(mut app App) {
 	// app.new_action(function, 'fonction_name', -1 or int(KeyCode. ))
-	app.boutons_list << [
-		playint.Bouton{
+	app.buttons_list << [
+		playint.Button{
 			text:           'Options'
 			pos:            Vec2[f32]{4 * 'Options'.len + 5, 16}
 			function:       playint.option_pause
@@ -52,7 +51,7 @@ fn on_init(mut app App) {
 fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.settings_render()
-	app.boutons_draw(mut app)
+	app.buttons_draw(mut app)
 	app.main_menu_render()
 	app.ctx.end()
 }
@@ -62,8 +61,8 @@ fn on_event(e &gg.Event, mut app App) {
 }
 
 fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
-	app.check_boutons_options()
-	app.boutons_check(mut app)
+	app.check_buttons_options()
+	app.buttons_check(mut app)
 }
 
 fn on_resized(e &gg.Event, mut app App) {
@@ -73,7 +72,7 @@ fn on_resized(e &gg.Event, mut app App) {
 	new_x := size.width
 	new_y := size.height
 
-	app.boutons_pos_resize(old_x, old_y, new_x, new_y)
+	app.buttons_pos_resize(old_x, old_y, new_x, new_y)
 
 	app.ctx.width = size.width
 	app.ctx.height = size.height
