@@ -384,6 +384,8 @@ pub fn (btn Button) check(mut app Appli) bool {
 
 	// Precalcul
 	for text in text_split {
+		lenght := text.len * 8 + cfg.size
+
 		if lenght > max_len {
 			max_len = lenght
 		}
