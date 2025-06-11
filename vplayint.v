@@ -384,7 +384,7 @@ pub fn (btn Button) check(mut app Appli) bool {
 
 	// Precalcul
 	for text in text_split {
-		lenght := text.len * 8 + cfg.size
+		lenght := text.len * 8 + btn.cfg.size
 
 		if lenght > max_len {
 			max_len = lenght
@@ -394,7 +394,7 @@ pub fn (btn Button) check(mut app Appli) bool {
 	y := app.ctx.mouse_pos_y 
 
 	if btn.pos.x - max_len / 2 < x && x < btn.pos.x - max_len / 2{
-		if btn.pos.x - cfg.size * text_split.lenght < y && y < btn.pos.x + cfg.size * text_split.lenght{
+		if btn.pos.x - btn.cfg.size * text_split.lenght < y && y < btn.pos.x + btn.cfg.size * text_split.lenght{
 			return true
 		}
 	}
