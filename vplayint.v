@@ -394,7 +394,7 @@ pub fn (btn Button) check(mut app Appli) bool {
 	y := app.ctx.mouse_pos_y 
 
 	if btn.pos.x - max_len / 2 < x && x < btn.pos.x + max_len / 2{
-		if btn.pos.x - btn.cfg.size * text_split.len < y && y < btn.pos.x + btn.cfg.size * text_split.len{
+		if btn.pos.y - btn.cfg.size * text_split.len < y && y < btn.pos.y + btn.cfg.size * text_split.len{
 			return true
 		}
 	}
