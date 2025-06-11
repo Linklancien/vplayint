@@ -378,8 +378,26 @@ pub mut:
 
 // Button fn
 pub fn (btn Button) check(mut app Appli) bool {
-	mouse_pos := Vec2[f32]{app.ctx.mouse_pos_x, app.ctx.mouse_pos_y}
-	return point_is_in_cirle(btn.pos, 20, mouse_pos)
+	text_split := btn.text.split('\n')
+
+	mut max_len := 0
+
+	// Precalcul
+	for text in text_split {
+		if lenght > max_len {
+			max_len = lenght
+		}
+	}
+	x := app.ctx.mouse_pos_x 
+	y := app.ctx.mouse_pos_y 
+
+	if btn.pos.x - max_len / 2 < x && x < btn.pos.x - max_len / 2{
+		if btn.pos.x - cfg.size * text_split.lenght < y && y < btn.pos.x + cfg.size * text_split.lenght{
+			return true
+		}
+	}
+	
+	return false
 }
 
 pub fn (btn Button) draw(mut app Appli) {
