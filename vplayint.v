@@ -421,7 +421,7 @@ fn (btn Button) render(ctx gg.Context, transparency u8) {
 
 	// Precalcul
 	for text in text_split {
-		lenght := text.len * 8 + cfg.size
+		lenght := text.len * 8 + btn.cfg.size
 		text_len << lenght
 
 		if lenght > max_len {
@@ -431,15 +431,15 @@ fn (btn Button) render(ctx gg.Context, transparency u8) {
 
 	// affichage
 	x := btn.pos.x - max_len / 2
-	mut y := btn.pos.y - cfg.size * text_split.len
+	mut y := btn.pos.y - btn.cfg.size * text_split.len
 
-	ctx.draw_rounded_rect_filled(x, y, max_len, cfg.size * text_split.len + cfg.size,
+	ctx.draw_rounded_rect_filled(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size,
 		5, attenuation(gx.gray, transparency))
 
-	y += cfg.size / 2
+	y += btn.cfg.size / 2
 	for text in text_split {
-		ctx.draw_text(int(x + cfg.size / 2), int(y), text, cfg)
-		y += cfg.size
+		ctx.draw_text(int(x + btn.cfg.size / 2), int(y), text, btn.cfg)
+		y += btn.cfg.size
 	}
 }
 
