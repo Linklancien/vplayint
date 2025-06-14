@@ -378,7 +378,7 @@ pub mut:
 
 // Button fn
 pub fn (btn Button) check(mut app Appli) bool {
-	text_split := btn.text.split('\n')
+	mut text_split := btn.text.split('\n')
 
 	mut max_len := 0
 
@@ -390,15 +390,16 @@ pub fn (btn Button) check(mut app Appli) bool {
 			max_len = lenght
 		}
 	}
-	x := app.ctx.mouse_pos_x 
-	y := app.ctx.mouse_pos_y 
+	x := app.ctx.mouse_pos_x
+	y := app.ctx.mouse_pos_y
 
-	if btn.pos.x - max_len / 2 < x && x < btn.pos.x + max_len / 2{
-		if btn.pos.y - btn.cfg.size * text_split.len < y && y < btn.pos.y + btn.cfg.size * text_split.len{
+	if btn.pos.x - max_len / 2 < x && x < btn.pos.x + max_len / 2 {
+		if btn.pos.y - btn.cfg.size * text_split.len < y
+			&& y < btn.pos.y + btn.cfg.size * text_split.len {
 			return true
 		}
 	}
-	
+
 	return false
 }
 
@@ -408,8 +409,37 @@ pub fn (btn Button) draw(mut app Appli) {
 		if !btn.is_actionnable(mut app) || btn.check(mut app) {
 			transparency = 175
 		}
-		text_rect_render(app.ctx, btn.cfg, btn.pos.x, btn.pos.y, true, true, btn.text,
-			transparency)
+		btn.render(app.ctx, transparency)
+	}
+}
+
+fn (btn Button) render(ctx gg.Context, transparency u8) {
+	text_split := btn.text.split('\n')
+
+	mut text_len := []int{cap: text_split.len}
+	mut max_len := 0
+
+	// Precalcul
+	for text in text_split {
+		lenght := text.len * 8 + cfg.size
+		text_len << lenght
+
+		if lenght > max_len {
+			max_len = lenght
+		}
+	}
+
+	// affichage
+	x := btn.pos.x - max_len / 2
+	mut y := btn.pos.y - cfg.size * text_split.len
+
+	ctx.draw_rounded_rect_filled(x, y, max_len, cfg.size * text_split.len + cfg.size,
+		5, attenuation(gx.gray, transparency))
+
+	y += cfg.size / 2
+	for text in text_split {
+		ctx.draw_text(int(x + cfg.size / 2), int(y), text, cfg)
+		y += cfg.size
 	}
 }
 
