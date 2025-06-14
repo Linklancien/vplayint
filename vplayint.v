@@ -382,7 +382,7 @@ pub mut:
 
 // Button fn
 pub fn (btn Button) check(mut app Appli) bool {
-	mut text_split := btn.text.split('\n')
+	mut text_split := suppress_tabs(btn.text)
 
 	mut max_len := 0
 
@@ -418,7 +418,7 @@ pub fn (btn Button) draw(mut app Appli) {
 }
 
 fn (btn Button) render(ctx gg.Context, transparency u8) {
-	text_split := btn.text.split('\n')
+	text_split := suppress_tabs(btn.text)
 
 	mut text_len := []int{cap: text_split.len}
 	mut max_len := 0
@@ -480,7 +480,7 @@ pub fn (mut opt Opt) buttons_pos_resize(old_x f32, old_y f32, new_x f32, new_y f
 
 // UI
 pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
-	text_split := text_brut.split('\n')
+	text_split := suppress_tabs(text_brut)
 
 	mut text_len := []int{cap: text_split.len}
 	mut max_len := 0
@@ -517,4 +517,20 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 
 pub fn attenuation(color gx.Color, new_a u8) gx.Color {
 	return gx.Color{color.r, color.g, color.b, new_a}
+}
+
+pub fn suppress_tabs(text string) []string{
+	tempo := text.split('\n')
+	mut final := []string{}
+	for phrase in tempo{
+		max_id := 0
+		for id in phrase.len{
+			// 9 is the u8 corresponding to tabs
+			if phrase[id] == 9 {
+				max_id := id
+			}
+		}
+		final << tempo[max_id...]
+	}
+	return final
 }
