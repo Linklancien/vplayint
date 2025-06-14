@@ -519,18 +519,18 @@ pub fn attenuation(color gx.Color, new_a u8) gx.Color {
 	return gx.Color{color.r, color.g, color.b, new_a}
 }
 
-pub fn suppress_tabs(text string) []string{
+pub fn suppress_tabs(text string) []string {
 	tempo := text.split('\n')
 	mut final := []string{}
-	for phrase in tempo{
-		max_id := 0
-		for id in phrase.len{
+	for phrase in tempo {
+		mut max_id := 0
+		for id in phrase.len {
 			// 9 is the u8 corresponding to tabs
 			if phrase[id] == 9 {
-				max_id := id
+				max_id = id
 			}
 		}
-		final << tempo[max_id...]
+		final << tempo[max_id..]
 	}
 	return final
 }
