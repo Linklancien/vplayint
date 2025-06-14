@@ -443,7 +443,9 @@ fn (btn Button) render(ctx gg.Context, transparency u8) {
 		5, attenuation(btn.color, transparency))
 
 	// image
-	ctx.draw_image(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size, btn.image)
+	if btn.image.cache.len > 0 {
+		ctx.draw_image(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size, btn.image)
+	}
 
 	// text
 	y += btn.cfg.size / 2
@@ -530,16 +532,15 @@ pub fn suppress_tabs(text string) []string {
 	mut final := []string{}
 	for phrase in tempo {
 		mut max_id := 0
-		for id in 0..phrase.len {
+		for id in 0 .. phrase.len {
 			// 9 is the u8 corresponding to tabs
 			if phrase[id] == 9 {
 				max_id = id + 1
 			}
 		}
-		if max_id < phrase.len{
+		if max_id < phrase.len {
 			final << phrase[max_id..]
-		}
-		else{
+		} else {
 			final << [' ']
 		}
 	}
