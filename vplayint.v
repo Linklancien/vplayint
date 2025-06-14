@@ -371,7 +371,7 @@ pub mut:
 	// affichage
 	text  string
 	cfg   gx.TextCfg
-	color gg.Color = gx.grey
+	color gg.Color = gx.gray
 	pos   Vec2[f32]
 
 	// utilitary
