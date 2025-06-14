@@ -369,12 +369,12 @@ fn point_is_in_cirle(circle_pos Vec2[f32], radius f32, mouse_pos Vec2[f32]) bool
 pub struct Button {
 pub mut:
 	// affichage
-	text  string
-	cfg   gx.TextCfg
-	color gg.Color = gx.gray
-	pos   Vec2[f32]
-	image gg.Image
-	boder int
+	text   string
+	cfg    gx.TextCfg
+	color  gg.Color = gx.gray
+	pos    Vec2[f32]
+	image  gg.Image
+	border f32
 
 	// utilitary
 	function       fn (mut Appli)      @[required]
