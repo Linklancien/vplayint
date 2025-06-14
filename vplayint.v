@@ -530,7 +530,7 @@ pub fn suppress_tabs(text string) []string {
 				max_id = id
 			}
 		}
-		final << tempo[max_id..]
+		final << phrase[max_id..]
 	}
 	return final
 }
