@@ -373,6 +373,7 @@ pub mut:
 	cfg   gx.TextCfg
 	color gg.Color = gx.gray
 	pos   Vec2[f32]
+	image gg.Image
 
 	// utilitary
 	function       fn (mut Appli)      @[required]
@@ -437,9 +438,14 @@ fn (btn Button) render(ctx gg.Context, transparency u8) {
 	x := btn.pos.x - max_len / 2
 	mut y := btn.pos.y - btn.cfg.size * text_split.len
 
+	// back
 	ctx.draw_rounded_rect_filled(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size,
 		5, attenuation(btn.color, transparency))
 
+	// image
+	ctx.draw_image(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size, btn.image)
+
+	// text
 	y += btn.cfg.size / 2
 	for text in text_split {
 		ctx.draw_text(int(x + btn.cfg.size / 2), int(y), text, btn.cfg)
