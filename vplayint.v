@@ -368,9 +368,13 @@ fn point_is_in_cirle(circle_pos Vec2[f32], radius f32, mouse_pos Vec2[f32]) bool
 // Button
 pub struct Button {
 pub mut:
-	text           string
-	cfg            gx.TextCfg
-	pos            Vec2[f32]
+	// affichage
+	text  string
+	cfg   gx.TextCfg
+	color gg.Color = gx.grey
+	pos   Vec2[f32]
+
+	// utilitary
 	function       fn (mut Appli)      @[required]
 	is_visible     fn (mut Appli) bool @[required]
 	is_actionnable fn (mut Appli) bool @[required]
@@ -434,7 +438,7 @@ fn (btn Button) render(ctx gg.Context, transparency u8) {
 	mut y := btn.pos.y - btn.cfg.size * text_split.len
 
 	ctx.draw_rounded_rect_filled(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size,
-		5, attenuation(gx.gray, transparency))
+		5, attenuation(btn.color, transparency))
 
 	y += btn.cfg.size / 2
 	for text in text_split {
