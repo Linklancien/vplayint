@@ -374,6 +374,7 @@ pub mut:
 	color gg.Color = gx.gray
 	pos   Vec2[f32]
 	image gg.Image
+	boder int
 
 	// utilitary
 	function       fn (mut Appli)      @[required]
@@ -444,7 +445,8 @@ fn (btn Button) render(ctx gg.Context, transparency u8) {
 
 	// image
 	if btn.image.id != 0 {
-		ctx.draw_image(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size, btn.image)
+		ctx.draw_image(x + btn.border, y + btn.border, max_len - btn.border,
+			btn.cfg.size * text_split.len + btn.cfg.size - btn.border, btn.image)
 	}
 
 	// text
