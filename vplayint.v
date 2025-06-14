@@ -443,7 +443,7 @@ fn (btn Button) render(ctx gg.Context, transparency u8) {
 		5, attenuation(btn.color, transparency))
 
 	// image
-	if btn.image.cache.len > 0 {
+	if btn.image.data.len > 0 {
 		ctx.draw_image(x, y, max_len, btn.cfg.size * text_split.len + btn.cfg.size, btn.image)
 	}
 
