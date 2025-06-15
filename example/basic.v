@@ -41,7 +41,7 @@ fn on_init(mut app App) {
 		playint.Button{
 			text:           'Options'
 			pos:            Vec2[f32]{4 * 'Options'.len + 5, 16}
-			image:          app.ctx.create_image('test_image.bmp') or { panic('No image') }
+			image:          app.ctx.create_image('image.bmp') or { panic('No image') }
 			function:       playint.option_pause
 			is_visible:     params_is_visible
 			is_actionnable: params_is_actionnable
