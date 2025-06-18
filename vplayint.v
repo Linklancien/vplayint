@@ -219,6 +219,7 @@ pub fn force_close(mut app Appli) {
 
 pub fn option_pause(mut app Appli) {
 	app.changing_options = !app.changing_options
+	app.pause_scroll = 0
 }
 
 pub fn (mut opt Opt) on_event(e &gg.Event, mut app Appli) {
