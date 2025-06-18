@@ -227,12 +227,23 @@ pub fn (mut opt Opt) on_event(e &gg.Event, mut app Appli) {
 			.key_down {
 				opt.input(int(e.key_code), mut app)
 			}
-			.mouse_down {
-				match e.mouse_button {
-					.left {
-						// check_buttons(e.mouse_x, e.mouse_y)
+			// .mouse_down {
+			// 	match e.mouse_button {
+			// 		.left {
+			// 			// check_buttons(e.mouse_x, e.mouse_y)
+			// 		}
+			// 		else {}
+			// 	}
+			// }
+			.mouse_scroll {
+				e.scroll_y{
+					if e.scroll_y > 0 && opt.pause_scroll > 0{
+						opt.pause_scroll -= 1
+						
 					}
-					else {}
+					else if e.scroll_y < 0 && opt.pause_scroll < actions_names.len - 10{
+						opt.pause_scroll += 1
+					}
 				}
 			}
 			else {}
