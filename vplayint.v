@@ -241,7 +241,7 @@ pub fn (mut opt Opt) on_event(e &gg.Event, mut app Appli) {
 				{
 					if e.scroll_y > 0 && opt.pause_scroll > 0 {
 						opt.pause_scroll -= 1
-					} else if e.scroll_y < 0 && opt.pause_scroll < actions_names.len - 10 {
+					} else if e.scroll_y < 0 && opt.pause_scroll < opt.actions_names.len - 10 {
 						opt.pause_scroll += 1
 					}
 				}
