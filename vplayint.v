@@ -1,6 +1,5 @@
 module playint
 
-import gx
 import gg { KeyCode }
 import math.vec { Vec2 }
 
@@ -163,7 +162,7 @@ mut:
 	// most likely between 1 & 2
 	button_placement_proportion f32
 
-	text_cfg gx.TextCfg
+	text_cfg gg.TextCfg
 
 	changing_options bool
 
@@ -197,7 +196,7 @@ mut:
 	// most likely between 1 & 2
 	button_placement_proportion f32 = 1.5
 
-	text_cfg gx.TextCfg
+	text_cfg gg.TextCfg
 
 	changing_options bool
 
@@ -337,9 +336,9 @@ pub fn (mut opt Opt) settings_render() {
 				text_rect_render(opt.ctx, opt.text_cfg, x * opt.description_placement_proportion,
 					y, false, false, (opt.actions_names[true_ind] + ': ' + keys_codes_names),
 					transparency)
-				mut color := gx.gray
+				mut color := gg.gray
 				if opt.id_change == true_ind {
-					color = gx.red
+					color = gg.red
 				}
 				opt.ctx.draw_circle_filled(x * opt.button_placement_proportion, y + 15,
 					buttons_radius, attenuation(color, transparency))
@@ -381,8 +380,8 @@ pub struct Button {
 pub mut:
 	// affichage
 	text   string
-	cfg    gx.TextCfg
-	color  gg.Color = gx.gray
+	cfg    gg.TextCfg
+	color  gg.Color = gg.gray
 	pos    Vec2[f32]
 	image  gg.Image
 	border f32
@@ -500,7 +499,7 @@ pub fn (mut opt Opt) buttons_pos_resize(old_x f32, old_y f32, new_x f32, new_y f
 }
 
 // UI
-pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
+pub fn text_rect_render(ctx gg.Context, cfg gg.TextCfg, x f32, y f32, middle_width bool, middle_height bool, text_brut string, transparency u8) {
 	text_split := suppress_tabs(text_brut)
 
 	mut text_len := []int{cap: text_split.len}
@@ -527,7 +526,7 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 	}
 
 	ctx.draw_rounded_rect_filled(new_x, new_y, max_len, cfg.size * text_split.len + cfg.size,
-		5, attenuation(gx.gray, transparency))
+		5, attenuation(gg.gray, transparency))
 
 	new_y += cfg.size / 2
 	for text in text_split {
@@ -536,8 +535,8 @@ pub fn text_rect_render(ctx gg.Context, cfg gx.TextCfg, x f32, y f32, middle_wid
 	}
 }
 
-pub fn attenuation(color gx.Color, new_a u8) gx.Color {
-	return gx.Color{color.r, color.g, color.b, new_a}
+pub fn attenuation(color gg.Color, new_a u8) gg.Color {
+	return gg.Color{color.r, color.g, color.b, new_a}
 }
 
 pub fn suppress_tabs(text string) []string {
