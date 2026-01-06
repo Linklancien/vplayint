@@ -96,7 +96,7 @@ Good to know for an easy use:
     - function_name is a string  
     - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) if you key_bind it.    
 > [!CAUTION]
-> Be aware, qwerty and azerty aren't support yet, but in game it works well.
+> Be aware, azerty isn't support yet, so all key-bindings will be in qwerty, but of you change in game it works well.
   - the on_frame function is as followed:
   ```
   fn on_frame(mut app App) {
