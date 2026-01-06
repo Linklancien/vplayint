@@ -88,8 +88,8 @@ Good to know for an easy use:
    - ``is_actionnable`` that also returns a true if the button is actionnable and false if it's not.  
     Most of the time it is the same as ``is_visible`` but with the ``if !changing_options{} && ...``.  
 
-    TYou key-binded a function by using the ``app.new_action`` function.  
-    You have to give in order: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
+    To key-binded a function by using the ``app.new_action`` function, 
+    you have to give in order: ``(function, 'function_name', -1 or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED)``.
     - ``new_action`` needs to be called on your a ``playint.Opt`` struct
     - the function needs to be such as ``fn (mut Appli)``. 
     If you want to access fields that are not in Appli, you can use ``if mut app is App{}`` or ``match app{App{}}``, the type of app will change accordingly.  
