@@ -1,3 +1,45 @@
+#Code #Pause  
+A #Module to handle player interaction, mostly for a game  usage.
+A V module that manages the link between a key and it's action, also provide boutons.
+
+It allows the change of the keybinds dynamically.
+
+use ```v install Linklancien.playint``` to download this module and then ```import linklancien.playint``` in your .v file to use it.
+It uses the module gg.
+
+Good to know for an easy use:
+# Interface:
+Use a struct such as
+ ```v
+   struct App {
+      playint.Opt
+      // your variables for you code
+    }
+ ```
+ This way it implements all the field needed for playint.
+ Note that ``ctx &gg.Context`` is already a part of it, for more details see [Appli interface](#Example-walk-through)
+# Keybindings:
+You can init the struct Opt using `Opt.init()`, it will create 3 action:
+- none_fn used for key without bindings and with no effects
+- force close that will close the gg window, initialized as `f4` 
+- option pause, that will allow the rendering of the option to change the key binds for instance, initialized as `escape` 
+
+To add your own key-bindings, use `Opt.new_action(action fn (mut Appli), name string, base_key_code int)`
+As showed
+- the first argument is the function you want to activate when the key is pressed
+- the second is the name that will be rendered in the pause menu
+- the last is a key to associate this action with, you can either use `int(KeyCode.f4)` from gg or pass -1 but players will have to manually change their key-binds
+Key-bindings may be saved in the future
+The last things to know about key-bindings is that you need to call `Opt.on_event(e &gg.Event, mut app Appli)` to handle the action
+(Most of the time it will be inside a on_event() function that you give to gg as in the example)
+> [!CAUTION]
+> Be aware, azerty isn't support yet, so all key-bindings from your code will be in qwerty, but if you change inside the option it works well.
+# Option rendering:
+If you want to change the key-bindings during the game, you need to render them using `Opt.settings_render()`, and to call `Opt.check_buttons_options()` inside a `fn on_click(x f32, y f32, button gg.MouseButton, mut app App)` that you give to gg as shown in the example.
+
+# Buttons:
+They may be suppress from this module in futures updates 
+# Example walk through: (Need to be reworked)
 A V module that manages the link between a key and it's action, also provide boutons.
 
 It allows the change of the keybinds dynamically.
@@ -95,8 +137,6 @@ Good to know for an easy use:
     If you want to access fields that are not in Appli, you can use ``if mut app is App{}`` or ``match app{App{}}``, the type of app will change accordingly.  
     - function_name is a string  
     - the last argument is -1 if you don't key-bind your action or int(gg.KeyCode.THE_KEY_YOU_WANT_TO_BE_ASSIGNED) if you key_bind it.    
-> [!CAUTION]
-> Be aware, azerty isn't support yet, so all key-bindings will be in qwerty, but of you change in game it works well.
   - the on_frame function is as followed:
   ```
   fn on_frame(mut app App) {
