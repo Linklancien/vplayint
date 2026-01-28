@@ -171,12 +171,9 @@ Good to know for an easy use:
 	size := gg.window_size()
 	old_x := app.ctx.width
 	old_y := app.ctx.height
-	new_x := size.width
-	new_y := size.height
-
-	app.buttons_pos_resize(old_x, old_y, new_x, new_y)
-
 	app.ctx.width = size.width
 	app.ctx.height = size.height
-  }
+
+	app.buttons_pos_resize(old_x, old_y, app.ctx.width, app.ctx.height)
+	}
   ```
