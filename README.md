@@ -1,6 +1,6 @@
 #Code #Pause  
 A #Module to handle player interaction, mostly for a game  usage.
-A V module that manages the link between a key and it's action, also provide boutons.
+A V module that manages the link between a key and it's action, also provide buttons.
 
 It allows the change of the keybinds dynamically.
 
@@ -40,7 +40,7 @@ If you want to change the key-bindings during the game, you need to render them 
 # Buttons:
 They may be suppress from this module in futures updates 
 # Example walk through: (Need to be reworked)
-A V module that manages the link between a key and it's action, also provide boutons.
+A V module that manages the link between a key and it's action, also provide buttons.
 
 It allows the change of the keybinds dynamically.
 
@@ -75,13 +75,13 @@ Good to know for an easy use:
       description_placement_proportion f32
 
       // most likely between 1 & 2
-      bouton_placement_proportion f32
+      button_placement_proportion f32
 
       text_cfg gx.TextCfg
 
       changing_options bool
 
-      boutons_list []Bouton
+      buttons_list []button
     }
    ```
   This interface will be used to link your code and the informations the module needs.  
@@ -122,8 +122,8 @@ Good to know for an easy use:
 	app.ctx.run()
 	}
   ```
-  - the on_init function is where you usually declare all your boutons, and the fonction that you want to be key-binded.  
-    Respectively by adding them in the ``boutons_list`` an array of your struct.  
+  - the on_init function is where you usually declare all your buttons, and the fonction that you want to be key-binded.  
+    Respectively by adding them in the ``buttons_list`` an array of your struct.  
     If you want to add a button, all you need is at least 3 function that all take only (mut Appli) in there arguments:  
    - ``function`` that is the fonction you want to call when the button is pressed.  
    - ``is_visible`` that returns a bool, true if your button is visible and false if it's not.  
@@ -142,12 +142,12 @@ Good to know for an easy use:
   fn on_frame(mut app App) {
 	app.ctx.begin()
 	app.settings_render()
-	app.boutons_draw(mut app)
+	app.buttons_draw(mut app)
 	app.ctx.end()
   }
   ```
   ``app.settings_render()`` is use to draw the settings panel when ``app.changing_options`` is true.  
-  ``app.boutons_draw()`` is use to draw all the buttons on ``app.boutons_list``.  
+  ``app.buttons_draw()`` is use to draw all the buttons on ``app.buttons_list``.  
   You juste have to call those two fonction in between ``app.ctx.begin()`` and ``app.ctx.end()``.  
   You can put your code all around as you want.  
   - the on_event function is simple you can base your's on the following:
@@ -161,8 +161,8 @@ Good to know for an easy use:
   - the on_click function is here to trigger the buttons:
   ```
   fn on_click(x f32, y f32, button gg.MouseButton, mut app App) {
-	app.check_boutons_options()
-	app.boutons_check(mut app)
+	app.check_buttons_options()
+	app.buttons_check(mut app)
   }
   ```
   - the on_resized function is here to change the position of the button as your window extend or retract
@@ -174,7 +174,7 @@ Good to know for an easy use:
 	new_x := size.width
 	new_y := size.height
 
-	app.boutons_pos_resize(old_x, old_y, new_x, new_y)
+	app.buttons_pos_resize(old_x, old_y, new_x, new_y)
 
 	app.ctx.width = size.width
 	app.ctx.height = size.height
